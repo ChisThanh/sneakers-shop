@@ -45,15 +45,15 @@
         <li class="side-nav-item">
             <a href="javascript: void(0);" class="side-nav-link">
                 <i class="uil-store"></i>
-                <span> Ecommerce </span>
+                <span> Product </span>
                 <span class="menu-arrow"></span>
             </a>
             <ul class="side-nav-second-level" aria-expanded="false">
                 <li>
-                    <a href="apps-ecommerce-products.html">Products</a>
+                    <a href="{{ route('admin.product.index') }}">Products</a>
                 </li>
                 <li>
-                    <a href="apps-ecommerce-products-details.html">Products Details</a>
+                    <a href="#">Products Details</a>
                 </li>
             </ul>
         </li>

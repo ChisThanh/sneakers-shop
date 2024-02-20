@@ -13,8 +13,16 @@ class Product extends Model implements TranslatableContract
     use HasFactory;
 
 
-    public $translatedAttributes = ['name', 'description'];
-    protected $fillable = ['price', 'stock_quantity'];
+    public $translatedAttributes = [
+        'name',
+        'description'
+    ];
+
+    protected $fillable = [
+        'price',
+        'image',
+        'stock_quantity'
+    ];
 
 
     // public function productTranslations()
