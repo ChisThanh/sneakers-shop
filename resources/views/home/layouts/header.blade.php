@@ -42,6 +42,15 @@
                                  </li>
                              </ul>
                          </li>
+
+                         <li class="nav-item submenu dropdown">
+                             <form action="{{ route('vnpay') }}" method="POST">
+                                 @csrf
+                                 <input type="hidden" name="redirect" id="">
+                                 <button class="nav-link dropdown-toggle">Thanh toán VNPay</button>
+                             </form>
+
+                         </li>
                          <li class="nav-item submenu dropdown">
                              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                  aria-haspopup="true" aria-expanded="false">{{ __('homepage.languages') }}</a>

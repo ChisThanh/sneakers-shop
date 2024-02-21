@@ -19,7 +19,8 @@ Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', [ProductController::class, 'index'])->name('index');
         Route::get('/create', [ProductController::class, 'create'])->name('create');
         Route::post('/create', [ProductController::class, 'store'])->name('store');
-
-        // Route::post('/import-csv', [ProductController::class, 'importCSV'])->name('importCSV');
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
+        Route::put('/edit/{id}', [ProductController::class, 'update'])->name('update');
+        Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('destroy');
     });
 });

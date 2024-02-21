@@ -19,4 +19,14 @@ class ProductController extends Controller
         }
         return $products;
     }
+    public function detail(string $id)
+    {
+        try {
+            $product = Product::query()->findOrFail($id);
+        } catch (\Throwable $th) {
+            return $this->errorResponse('Sản phẩm không tồn tại');
+        }
+        $product->image = $product->url_img;
+        return $this->successResponse($product, 'Thành công');
+    }
 }

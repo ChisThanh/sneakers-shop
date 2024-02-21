@@ -18,12 +18,14 @@
         <div class="col-12">
 
 
-            <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('admin.product.update', ['id' => $product->id]) }}"
+                enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                     <label for="inputNamel4" class="col-form-label">Name</label>
                     <input type="text" class="form-control" id="inputNamel4" placeholder="Name" name="name"
-                        value="{{ old('name') }}" id="name">
+                        value="{{ $product->name }}" id="name">
                     <div class="text-danger " id="name-error"></div>
 
                     @error('name')
@@ -34,7 +36,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputPrice4" class="col-form-label">Price</label>
                         <input type="number" class="form-control" id="inputPrice4" placeholder="Price" name="price"
-                            value="{{ old('price') }}">
+                            value="{{ $product->price }}">
                         @error('price')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -42,7 +44,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputQuantitty4" class="col-form-label">Quantitty</label>
                         <input type="number" class="form-control" id="inputQuantitty4" placeholder="Quantitty"
-                            name="quantity" value="{{ old('quantity') }}">
+                            name="quantity" value="{{ $product->stock_quantity }}">
                         @error('quantity')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
@@ -58,7 +60,10 @@
                             onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                         <p>
                             <img id="blah" alt="your image" width="300" height="300"
-                                src="{{ asset('assets_admin/images/tmp-image.png') }}" />
+                                src="
+                                @if ($product->image !== '') {{ asset('images') . '/' . $product->image }} @else
+                                {{ asset('assets_admin/images/tmp-image.png') }} @endif
+                                " />
                         </p>
 
                     </div>
@@ -103,8 +108,10 @@
                 }).catch(swal.noop)
             @enderror
 
-            $('form').submit(function(e) {
+            $('#description-vi').summernote('code', '{!! $product->translate('vi')->description !!}');
+            $('#description-en').summernote('code', '{!! $product->translate('en')->description !!}');
 
+            $('form').submit(function(e) {
                 e.preventDefault();
                 var $form = $(this);
                 var $formData = new FormData($form[0]);
@@ -133,12 +140,15 @@
                         }, 1000);
                     },
                     error: function(response) {
+
                         $form.unbind('submit').submit();
 
                     }
                 });
 
             });
+
+
 
             let timerId;
             $('#description-vi').summernote({

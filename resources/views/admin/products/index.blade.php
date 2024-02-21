@@ -35,7 +35,6 @@
                             </div>
                         </div><!-- end col-->
                     </div>
-
                     {{-- table --}}
                     <table class="table table-hover table-centered mb-0">
                         <thead>
@@ -45,27 +44,10 @@
                                 <th>Image</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
-                                {{-- <th>Desciption</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- <tr>
-                                <td>
-                                    <p>VI - ASOS Ridley High Waist</p>
-                                    <p>EN - ASOS Ridley High Waist</p>
-                                </td>
-                                <td><img src="{{ asset('assets_admin/images/products/product-1.jpg') }}" alt="image"
-                                        width="70" height="70">
-                                </td>
-                                <td>$79.49</td>
-                                <td><span class="badge badge-primary">82 Pcs</span></td>
-                                <td>$6,518.18</td>
-                                <td class="table-action">
-                                    <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                                    <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                </td>
-                            </tr> --}}
                         </tbody>
                     </table>
                 </div> <!-- end card-body-->
@@ -75,19 +57,28 @@
     </div>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end" id="pagination">
-            {{-- <li class="page-item disabled">
-                <a class="page-link" href="javascript: void(0);" tabindex="-1">Previous</a>
-            </li>
-            {{-- <li class="page-item"><a class="page-link" href="javascript: void(0);">1</a></li>
-            <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
-            <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
-            <li class="page-item"> --}}
-            {{-- <a class="page-link" href="javascript: void(0);">Next</a>
-            </li> --}}
+
         </ul>
     </nav>
+    <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Chi tiết sản phẩm</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 @endsection
+@push('css')
+    <link href="{{ asset('assets_admin/css/vendor/swal2.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 @push('js')
+    <script src="{{ asset('assets_admin/js/vendor/sweetalert2.js') }}"></script>
     <script>
         $(document).ready(function() {
             const paginationContainer = $('#pagination');
@@ -132,14 +123,9 @@
                         .append(
                             `<td><span class="badge badge-primary">${v.stock_quantity} Cái</span></td>`
                         )
-                        // .append(`<td>
-                    //         <p>VI - ${viTranslation.description}</p>
-                    //         <p>EN - ${enTranslation.description}</p>
-                    //     </td>`)
-                        .append(`<td class="table-action">
-                    <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                    <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                </td>`);
+                        .append(
+                            `<td class="table-action"><a href="/admin/product/edit/${v.id}" class="action-icon"> <i class="mdi mdi-pencil"></i></a><a href="##" class="action-icon btn-delete" data-id='${v.id}'> <i class="mdi mdi-delete"></i></a><a href="##" class="action-icon btn-detail" data-id='${v.id}'> <i class="mdi mdi-eye-outline"></i></a></td>`
+                        );
                 });
             }
 
@@ -191,6 +177,7 @@
                 });
                 paginationContainer.append(nextPageLink);
             }
+
             const urlParams = new URLSearchParams(window.location.search);
             const pageParam = urlParams.get('page');
             if (pageParam) {
@@ -198,6 +185,62 @@
             }
             fetchData(currentPage);
 
+            $('tbody').on('click', '.btn-detail', function(e) {
+                e.preventDefault();
+                var dataId = $(this).attr('data-id');
+                console.log(dataId);
+
+                $.ajax({
+                    type: "GET",
+                    url: `/api/product/${dataId}`,
+                    dataType: "json",
+                    success: function(response) {
+                        var data = response.data;
+                        $('.modal-body').html(`
+                                    <p>Name: ${data.name}</p>
+                                    <p>Description (EN): ${data.translations.find(t => t.locale === 'en').description}</p>
+                                    <p>Description (VI): ${data.translations.find(t => t.locale === 'vi').description}</p>
+                                    <p>Price: ${data.price}</p>
+                                    <p>Stock Quantity: ${data.stock_quantity}</p>
+                                    <img src="${data.image}" alt="Product Image" width="200">
+                                    `);
+                    }
+                });
+                $('#modal-detail').modal('show');
+            });
+            $('tbody').on('click', '.btn-delete', function(e) {
+                e.preventDefault();
+                var dataId = $(this).attr('data-id');
+                swal({
+                    title: 'Bạn có chắc chắn xóa?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-info btn-fill',
+                    cancelButtonClass: 'btn btn-danger btn-fill',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy',
+                    buttonsStyling: false
+                }).then(function(result) {
+                    $.ajax({
+                        type: "POST",
+                        url: `/admin/product/destroy/${dataId}`,
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "_method": 'DELETE'
+                        },
+                        success: function(response) {
+                            swal({
+                                title: "Xóa thành công!",
+                                buttonsStyling: false,
+                                type: "success",
+                                timer: 1000,
+                                showConfirmButton: false
+                            }).catch(swal.noop);
+                            fetchData(currentPage);
+                        }
+                    });
+                }).catch(swal.noop)
+            });
 
             var file = $("#file-import");
             file.change(function(e) {
@@ -217,7 +260,13 @@
                     processData: false,
                     success: function(response) {
                         fetchData(currentPage);
-                        alert("Thành công");
+                        swal({
+                            title: "Tải dữ liệu thành công!",
+                            buttonsStyling: false,
+                            type: "success",
+                            timer: 1000,
+                            showConfirmButton: false
+                        }).catch(swal.noop);
                     },
                     error: function(response) {
                         alert(response.responseJSON.message);

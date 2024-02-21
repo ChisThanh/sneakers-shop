@@ -51,6 +51,7 @@ services:
         working_dir: /var/www/html
         volumes:
             - ./:/var/www/html
+            - ./storage:/var/www/html/storage
         ports:
             - "${PHP_HOST_PORT:-9000}:${PHP_DOCKER_CONTAINER_PORT:-9000}"
         networks:

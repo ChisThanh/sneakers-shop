@@ -23,10 +23,11 @@ class Product extends Model implements TranslatableContract
         'image',
         'stock_quantity'
     ];
-
-
-    // public function productTranslations()
-    // {
-    //     return $this->hasMany(ProductTranslation::class, 'product_id');
-    // }
+    public function getUrlImgAttribute()
+    {
+        if (!empty($this->image)) {
+            return asset('images') . '/' . $this->image;
+        }
+        return null;
+    }
 }

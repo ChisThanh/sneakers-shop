@@ -22,5 +22,7 @@ Route::group([
     'as' => 'product.'
 ], function () {
     Route::get('/', [ProductController::class, 'getPaginate'])->name('index');
+    Route::get('/{id}', [ProductController::class, 'detail'])->name('detail');
+
     Route::post("/import-csv", [AdminProductController::class, 'importCSV'])->name("importCSV");
 });
