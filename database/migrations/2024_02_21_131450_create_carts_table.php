@@ -17,6 +17,10 @@ return new class extends Migration
             $table->date('delivery_date')->default(today());
             $table->float('total')->default(0);
             $table->integer('payment_status')->default(0);
+<<<<<<< HEAD
+=======
+            $table->integer('payment_method')->default(0);
+>>>>>>> c3c982e (refactor db, seeder)
             $table->integer('status')->default(0);
             $table->timestamps();
         });
