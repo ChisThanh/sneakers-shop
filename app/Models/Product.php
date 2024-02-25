@@ -19,6 +19,8 @@ class Product extends Model implements TranslatableContract
 
     protected $fillable = [
         'name',
+        'category_id',
+        'brand_id',
         'price',
         'image',
         'stock_quantity'
