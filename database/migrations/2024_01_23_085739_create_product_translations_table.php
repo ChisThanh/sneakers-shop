@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->string('locale')->index();
-            $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
 

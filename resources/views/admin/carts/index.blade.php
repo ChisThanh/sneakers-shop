@@ -7,10 +7,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
                         <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
-                        <li class="breadcrumb-item active">Products</li>
+                        <li class="breadcrumb-item active">Carts</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Products</h4>
+                <h4 class="page-title">Carts</h4>
             </div>
         </div>
     </div>
@@ -18,36 +18,19 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-2">
-                        <div class="col-sm-4">
-                            <a href="{{ route('admin.product.create') }}" class="btn btn-danger mb-2"><i
-                                    class="mdi mdi-plus-circle mr-2"></i> Add Products</a>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="text-sm-right">
-
-                                <form action="#" class="d-inline-block">
-                                    <label for="file-import" class="btn btn-success mb-2 mr-1">Import
-                                        CSV</label>
-                                    <input type="file" id="file-import" class="d-none" accept=".csv" name="file">
-                                </form>
-                                <button type="button" class="btn btn-light mb-2">Export</button>
-                            </div>
-                        </div><!-- end col-->
-                    </div>
                     {{-- table --}}
                     <table class="table table-hover table-centered mb-0">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Product Name</th>
-                                <th>Image</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Action</th>
+                                <th>User Name</th>
+                                <th>Total</th>
+                                <th>Delivery Date</th>
+                                <th>Status</th>
+                                <th>Detail</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody-main">
                         </tbody>
                     </table>
                 </div> <!-- end card-body-->
@@ -65,10 +48,22 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Product Detail</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">Cart Detail</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
+                    <table class="table table-hover table-centered mb-0">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-modal">
+
+                        </tbody>
+                    </table>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -87,7 +82,7 @@
 
             function fetchData(page) {
                 $.ajax({
-                    url: "{{ route('api.product.index') }}" + `?page=${page}`,
+                    url: "{{ route('api.cart.index') }}" + `?page=${page}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -105,26 +100,25 @@
             }
 
             function updateUI(data) {
-                $('tbody').empty();
+
+                console.log(data);
+
+
+                $('#tbody-main').empty();
                 $.each(data.data, function(i, v) {
-                    var viTranslation = v.translations.find(translation => translation
-                        .locale === 'vi');
-                    var enTranslation = v.translations.find(translation => translation
-                        .locale === 'en');
+                    var select = $('<select class="custom-select select-status">');
+                    $.each(v.status_array, function(i, v) {
+                        select.append(`<option value="${v}">${v}</option>`)
+                    });
 
                     $('tbody').append('<tr>')
                         .append(`<td>${v.id}</td>`)
+                        .append(`<td>${v.user_name}</td>`)
+                        .append(`<td>${v.total}</td>`)
+                        .append(`<td>${v.delivery_date}</td>`)
+                        .append($(`<td data-id="${v.id}">`).append(select))
                         .append(
-                            `<td>${v.name}</td>`)
-                        .append(
-                            `<td><img src="{{ asset('assets_admin/images/products/product-1.jpg') }}" alt="image" width="70" height="70"></td>`
-                        )
-                        .append(`<td>${v.price} VND</td>`)
-                        .append(
-                            `<td><span class="badge badge-primary">${v.stock_quantity} Cái</span></td>`
-                        )
-                        .append(
-                            `<td class="table-action"><a href="/admin/product/edit/${v.id}" class="action-icon"> <i class="mdi mdi-pencil"></i></a><a href="##" class="action-icon btn-delete" data-id='${v.id}'> <i class="mdi mdi-delete"></i></a><a href="##" class="action-icon btn-detail" data-id='${v.id}'> <i class="mdi mdi-eye-outline"></i></a></td>`
+                            `<td class="table-action"><a href="##" class="action-icon btn-detail" data-id='${v.id}'> <i class="mdi mdi-eye-outline"></i></td>`
                         );
                 });
             }
@@ -190,47 +184,49 @@
                 var dataId = $(this).attr('data-id');
                 $.ajax({
                     type: "GET",
-                    url: `/api/product/${dataId}`,
+                    url: `/api/cart/cart-detail/${dataId}`,
                     dataType: "json",
                     success: function(response) {
                         var data = response.data;
-                        $('.modal-body').html(`
-                                    <p><b>Name:</b> ${data.name}</p>
-                                    <p><b>Description (EN)</b>: ${data.translations.find(t => t.locale === 'en').description}</p>
-                                    <p><b>Description (VI)</b>: ${data.translations.find(t => t.locale === 'vi').description}</p>
-                                    <p><b>Price</b>: ${data.price}</p>
-                                    <p><b>Stock Quantity</b>: ${data.stock_quantity}</p>
-                                    <img src="${data.image}" alt="Product Image" width="200">
-                                    `);
+                        $('#tbody-modal').empty();
+                        $.each(data, function(i, v) {
+                            $('#tbody-modal').append(`<tr>
+                                    <td>${v.product.name}</td>
+                                    <td>${v.price} VND</td>
+                                    <td>${v.quantity}</td>
+                                    </tr>`);
+                        });
                     }
                 });
                 setTimeout(function() {
                     $('#modal-detail').modal('show');
                 }, 300);
             });
-            $('tbody').on('click', '.btn-delete', function(e) {
-                e.preventDefault();
-                var dataId = $(this).attr('data-id');
+
+            $('tbody').on('change', '.select-status', function(e) {
+                var closestTr = $(this).closest('td');
+                var dataId = closestTr.attr('data-id');
+                var selectedValue = $(this).val();
+                console.log(selectedValue);
                 swal({
-                    title: 'Bạn có chắc chắn xóa?',
+                    title: 'Bạn có chắc chắn thay đổi trình trạng đơn?',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonClass: 'btn btn-info btn-fill',
                     cancelButtonClass: 'btn btn-danger btn-fill',
-                    confirmButtonText: 'Xóa',
+                    confirmButtonText: 'Thay đổi',
                     cancelButtonText: 'Hủy',
                     buttonsStyling: false
                 }).then(function(result) {
                     $.ajax({
-                        type: "POST",
-                        url: `/admin/product/destroy/${dataId}`,
+                        type: "GET",
+                        url: `/admin/cart/edit/${dataId}`,
                         data: {
-                            "_token": "{{ csrf_token() }}",
-                            "_method": 'DELETE'
+                            'status': selectedValue
                         },
                         success: function(response) {
                             swal({
-                                title: "Xóa thành công!",
+                                title: "Thay đổi thành công!",
                                 buttonsStyling: false,
                                 type: "success",
                                 timer: 1000,
@@ -242,37 +238,6 @@
                 }).catch(swal.noop)
             });
 
-            var file = $("#file-import");
-            file.change(function(e) {
-                e.preventDefault();
-                var formData = new FormData();
-                formData.append('file', $(this)[0].files[0]);
-                formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-                $.ajax({
-                    url: '{{ route('api.product.importCSV') }}',
-                    type: "POST",
-                    dataType: "json",
-                    enctype: 'multipart/form-data',
-                    data: formData,
-                    async: false,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        fetchData(currentPage);
-                        swal({
-                            title: "Tải dữ liệu thành công!",
-                            buttonsStyling: false,
-                            type: "success",
-                            timer: 1000,
-                            showConfirmButton: false
-                        }).catch(swal.noop);
-                    },
-                    error: function(response) {
-                        alert(response.responseJSON.message);
-                    }
-                });
-            });
         });
     </script>
 @endpush

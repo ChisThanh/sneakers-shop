@@ -35,13 +35,11 @@
             </a>
         </li>
         <li class="side-nav-item">
-            <a href="apps-calendar.html" class="side-nav-link">
-                <i class="uil-calender"></i>
-                <span> Calendar </span>
+            <a href="{{ route('admin.cart.index') }}" class="side-nav-link">
+                <i class="mdi mdi-cart"></i>
+                <span> Cart </span>
             </a>
         </li>
-
-
         <li class="side-nav-item">
             <a href="javascript: void(0);" class="side-nav-link">
                 <i class="uil-store"></i>
@@ -53,10 +51,11 @@
                     <a href="{{ route('admin.product.index') }}">Products</a>
                 </li>
                 <li>
-                    <a href="#">Products Details</a>
+                    <a href="{{ route('admin.product.create') }}">Add Products</a>
                 </li>
             </ul>
         </li>
+
     </ul>
 
 

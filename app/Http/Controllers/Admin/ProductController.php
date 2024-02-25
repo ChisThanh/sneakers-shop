@@ -16,6 +16,7 @@ class ProductController extends Controller
 {
 
     use ResponseTrait;
+
     public function index()
     {
         return view('admin.products.index');
@@ -31,7 +32,7 @@ class ProductController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $product = ProductTranslation::query()->where('name', $data['name'])->first();
+        $product = Product::query()->where('name', $data['name'])->first();
         if (!is_null($product)) {
             return redirect()->back()->withErrors(['msg' => 'Sản phẩm đã tồn tại']);
         }
@@ -48,12 +49,11 @@ class ProductController extends Controller
             'price' =>  $data['price'],
             'stock_quantity' => $data['quantity'],
             'image' =>  $imagePath,
+            'name' => $data['name'],
             'vi' => [
-                'name' => $data['name'],
                 'description' => $data['description-vi'],
             ],
             'en' => [
-                'name' => $data['name'],
                 'description' => $data['description-en'],
             ]
         ]);
@@ -61,10 +61,6 @@ class ProductController extends Controller
     }
 
 
-    public function show(string $id)
-    {
-        //
-    }
 
 
     public function edit(string $id)
@@ -98,12 +94,11 @@ class ProductController extends Controller
             'price' =>  $data['price'],
             'stock_quantity' => $data['quantity'],
             'image' =>  $imagePath ?? $product->image,
+            'name' => $data['name'],
             'vi' => [
-                'name' => $data['name'],
                 'description' => $data['description-vi'],
             ],
             'en' => [
-                'name' => $data['name'],
                 'description' => $data['description-en'],
             ]
         ]);

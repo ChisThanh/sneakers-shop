@@ -5,10 +5,12 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\SocialiteController;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
+use PhpParser\Node\Stmt\Return_;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 // Home
 Route::get('/',  fn () =>  redirect('/home'));
@@ -38,17 +40,8 @@ Route::post('/chat/broadcast/{senderId}', [ChatController::class, 'broadcast'])-
 // Route Admin
 include __DIR__ . '/admin.php';
 
-
-Route::get('/clear-cache', function () {
-    // $exitCode = Artisan::call('cache:clear');
-    // $exitCode = Artisan::call('config:cache');
-
-    return 'DONE';
-});
-
 Route::get('/test', function () {
-    // dd(public_path('public'));
-    // dd($request->all());
+    dd(Cart::with('cart_detail')->first());
     return 1;
 });
 

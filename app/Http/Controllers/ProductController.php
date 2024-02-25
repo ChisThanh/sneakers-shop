@@ -12,7 +12,7 @@ class ProductController extends Controller
     {
         $page = $request->input('page', 1);
 
-        $products = Product::query()->paginate(2);
+        $products = Product::query()->paginate(5);
 
         if ($page > $products->lastPage()) {
             return redirect()->route('api.product.index', ['page' =>  $products->lastPage()]);

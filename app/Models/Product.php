@@ -14,20 +14,21 @@ class Product extends Model implements TranslatableContract
 
 
     public $translatedAttributes = [
-        'name',
         'description'
     ];
 
     protected $fillable = [
+        'name',
         'price',
         'image',
         'stock_quantity'
     ];
     public function getUrlImgAttribute()
     {
-        if (!empty($this->image)) {
+        if (isset($this->image) && strpos($this->image, 'products/') === 0) {
             return asset('images') . '/' . $this->image;
+        } else {
+            return $this->image;
         }
-        return null;
     }
 }

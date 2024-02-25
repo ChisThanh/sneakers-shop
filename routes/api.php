@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\ProductController;
@@ -23,6 +24,14 @@ Route::group([
 ], function () {
     Route::get('/', [ProductController::class, 'getPaginate'])->name('index');
     Route::get('/{id}', [ProductController::class, 'detail'])->name('detail');
-
     Route::post("/import-csv", [AdminProductController::class, 'importCSV'])->name("importCSV");
+});
+
+
+Route::group([
+    'prefix' => 'cart',
+    'as' => 'cart.'
+], function () {
+    Route::get('/', [CartController::class, 'getPaginate'])->name('index');
+    Route::get('/cart-detail/{id}', [CartController::class, 'getCartDetail'])->name('getCartDetail');
 });
