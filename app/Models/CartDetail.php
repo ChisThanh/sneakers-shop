@@ -21,4 +21,8 @@ class CartDetail extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+    public function getProductNameAttribute()
+    {
+        return $this->product->name;
+    }
 }

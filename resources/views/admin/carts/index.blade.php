@@ -118,7 +118,17 @@
                         .append(`<td>${v.delivery_date}</td>`)
                         .append($(`<td data-id="${v.id}">`).append(select))
                         .append(
-                            `<td class="table-action"><a href="##" class="action-icon btn-detail" data-id='${v.id}'> <i class="mdi mdi-eye-outline"></i></td>`
+                            `<td class="table-action">
+                                <a href="##" class="action-icon btn-detail" data-id='${v.id}'>
+                                    <i class="mdi mdi-eye-outline"></i>
+                                </a>
+                                <a href="/cart/down-invoice-pdf/${v.id}" class="action-icon">
+                                    <i class="mdi mdi-pdf-box"></i>
+                                </a>
+                                <a target="_blank" href="/cart/view-invoice-pdf/${v.id}" class="action-icon">
+                                    <i class="mdi mdi-pdf-box"></i>view
+                                </a>
+                            </td>`
                         );
                 });
             }

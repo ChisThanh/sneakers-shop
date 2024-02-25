@@ -4,8 +4,10 @@ use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SocialiteController;
 use App\Models\Cart;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +46,9 @@ Route::get('/test', function () {
     dd(Cart::with('cart_detail')->first());
     return 1;
 });
+
+Route::get('cart/view-invoice-pdf/{id}', [PDFController::class, 'viewPdfInvoice']);
+Route::get('cart/down-invoice-pdf/{id}', [PDFController::class, 'downloadPdfInvoice']);
 
 
 Route::post('/vnpay-payment', function () {
