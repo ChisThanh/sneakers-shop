@@ -186,6 +186,36 @@
     <div class="box-icon" id="box-icon">
         <div class="icon"><img src="{{ asset('assets_home/img/chat.png') }}" alt="icon"></div>
     </div>
+    <div id="modal-search-image" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tìm kiếm bằng hình ảnh</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Chọn ảnh mà bạn muốn tìm kiếm</p>
+                    <form action="#" id="form-upload-image" enctype="multipart/form-data">
+                        <label class="btn btn-success" for="imggg">Tải hình ảnh</label>
+                        <input type="file" name="image" id="imggg" class="d-none"
+                            onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0]);
+                            document.getElementById('blah').classList.remove('d-none');">
+                        <img id="blah" src="#" alt="your image" width="260" height="280" />
+                    </form>
+                    <div id="data-search">
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btn-form-upload">Tìm kiếm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="{{ asset('assets_home/js/vendor/jquery-2.2.4.min.js') }}"></script>
@@ -208,7 +238,6 @@
             cluster: 'ap1'
         });
         const channel = pusher.subscribe(`user.${userId}`);
-        //Receive messages
         //nhận tin nhắn mới
         channel.bind('chat', function(data) {
             console.log(data);
@@ -217,8 +246,6 @@
             );
             $('.chat-list').append(newLi);
         });
-
-        //Broadcast messages
         // gửi tin nhắn đi
         $("#form-chat").submit(function(event) {
             event.preventDefault();
@@ -244,6 +271,67 @@
         });
     </script>
 @endauth
+<script>
+    $(document).ready(function() {
+        var img = $("#blah");
+
+        if (img.attr("src") === "#") {
+            img.addClass("d-none");
+        }
+
+        var searchImg = $("#btn-search-image");
+        $(searchImg).click(function(e) {
+            e.preventDefault();
+            $("#modal-search-image").modal('show');
+        });
+        var formUpload = $("#form-upload-image");
+        $("#btn-form-upload").click(function(e) {
+            e.preventDefault();
+            var fileInput = $('#imggg')[0].files[0];
+            if (!fileInput) {
+                alert("Vui lòng chọn một ảnh tìm kiếm.");
+                return;
+            }
+            const formData = new FormData(formUpload[0]);
+            $.ajax({
+                type: "POST",
+                url: "http://127.0.0.1:5000/api/search-image",
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+
+                    $("#data-search").empty();
+
+                    if (Array.isArray(response) && response.length === 0) {
+                        $("#data-search").append(
+                            "<p style='color:red;' >Không có sản phẩm</p>");
+                    }
+
+                    $.each(response, function(i, v) {
+                        if (isFileNameValid(v.image)) {
+                            v.image =
+                                `{{ asset('assets_home/img/product') }}/${v.image}`;
+                        }
+                        $("#data-search").append(`<hr><div class="cart-search-img"><div><a href="/product/detail/${v.id}"><h4>${v.name}</h4></a><div>Giá: <span>${v.price}VND</span></div></div><div><img src="${v.image}" alt="img" width="75"></div>
+                    </div>`);
+                    });
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+
+            });
+        });
+
+        function isFileNameValid(fileName) {
+            var regex = /^[^.]+\.[^.]+$/;
+            return regex.test(fileName);
+        }
+    });
+</script>
 
 @stack('js')
 

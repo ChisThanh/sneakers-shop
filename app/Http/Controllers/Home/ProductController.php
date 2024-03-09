@@ -1,13 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Home;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponseTrait;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     use ResponseTrait;
+
+    public function index()
+    {
+        return view('home.products.index');
+    }
     public function getPaginate(Request $request)
     {
         $page = $request->input('page', 1);
@@ -28,5 +35,15 @@ class ProductController extends Controller
         }
         $product->image = $product->url_img;
         return $this->successResponse($product, 'Thành công');
+    }
+    public function searchImage(Request $request)
+    {
+        $images = $request->get("data");
+        $products = Product::where(function ($query) use ($images) {
+            foreach ($images as $image) {
+                $query->orWhere('image', 'like', '%' . $image . '%');
+            }
+        })->get();
+        return $products;
     }
 }

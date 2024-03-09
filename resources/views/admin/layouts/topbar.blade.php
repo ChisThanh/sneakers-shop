@@ -141,9 +141,9 @@
                                 class="rounded-circle">
                         </span>
                         <span>
-                            <span class="account-user-name"
+                            {{-- <span class="account-user-name"
                                 style="text-transform: capitalize;">{{ Auth::user()->name }}</span>
-                            <span class="account-position">Founder</span>
+                            <span class="account-position">Founder</span> --}}
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown"

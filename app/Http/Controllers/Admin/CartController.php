@@ -9,7 +9,6 @@ use App\Models\Cart;
 use App\Models\CartDetail;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\isNull;
 
 class CartController extends Controller
 {
@@ -20,20 +19,17 @@ class CartController extends Controller
         $carts = Cart::query()->paginate(5);
 
         $carts->getCollection()->transform(function ($cart) {
+
             $cart->user_name = $cart->user->name;
-            return $cart;
-        });
 
-
-        $carts->getCollection()->transform(function ($cart) {
             if ($cart->status === 0) {
                 $cart->status_array = [CartStatusEnum::getKey(CartStatusEnum::DESTROY)];
             } else {
                 $cart->status_array = CartStatusEnum::getKeys(range((int)$cart->status, CartStatusEnum::REVIEWS));
             }
+
             return $cart;
         });
-
 
         return $carts;
     }

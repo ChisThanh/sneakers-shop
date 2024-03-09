@@ -8319,5 +8319,28 @@ label {
     color: #ffba00;
 }
 
-/*# sourceMappingURL=main.css.map */
+span.ti-bag {
+    position: relative;
+}
 
+.ti-bag>span.text-number {
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffba00;
+    border-radius: 50%;
+    font-size: 0.7rem;
+}
+
+.cart-search-img {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+/*# sourceMappingURL=main.css.map */

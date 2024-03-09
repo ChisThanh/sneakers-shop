@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Home\ProductController;
 use App\Http\Controllers\TranslateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +14,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/translatte-text', [TranslateController::class, 'translate'])->name('translate');
+Route::post('/translate-text', [TranslateController::class, 'translate'])->name('translate');
 
 Route::post("/getHistory", [ChatController::class, 'getHistory'])->name("getHistory");
 

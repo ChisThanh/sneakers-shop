@@ -5,29 +5,24 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\Home\ProductController;
 use App\Http\Controllers\SocialiteController;
+use App\Mail\CustomMail;
 use App\Models\Cart;
-use Barryvdh\DomPDF\PDF;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use PhpParser\Node\Stmt\Return_;
-use Stichoza\GoogleTranslate\GoogleTranslate;
 
 // Home
 Route::get('/',  fn () =>  redirect('/home'));
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\Home\HomeController::class, 'index'])->name('home');
 
 // Auth
 Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect'])->name('oauth');
 Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback']);
-
 Route::get('/login',  [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login',  [AuthController::class, 'login']);
-
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Localization
@@ -156,3 +151,17 @@ Route::post('/vnpay-payment', function () {
         echo json_encode($returnData);
     }
 })->name('vnpay');
+
+
+Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+    Route::get('/', [ProductController::class, 'index'])->name('index');
+    Route::get('/search-image', [ProductController::class, 'searchImage'])->name('searchImage');
+    // Route::get('/create', [ProductController::class, 'create'])->name('create');
+    // Route::post('/create', [ProductController::class, 'store'])->name('store');
+    // Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
+    // Route::put('/edit/{id}', [ProductController::class, 'update'])->name('update');
+    // Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('destroy');
+});
+
+
+Route::get('/test', 'ProductController@test');
