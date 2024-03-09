@@ -19,10 +19,11 @@ RUN docker-php-ext-install gettext intl pdo_mysql gd
 RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
-
 WORKDIR /var/www/html
-COPY . .
-RUN chmod -R 777 storage bootstrap
 
+COPY . .
+RUN  chmod 777 -R /var/www/html/storage
+RUN  chmod 777 -R /var/www/html/bootstrap
+RUN  chmod 777 -R /var/www/html/public/images
 
 EXPOSE 9000
