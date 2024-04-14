@@ -7,6 +7,8 @@ use App\Http\Controllers\ResponseTrait;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
 use App\Imports\ProductImport;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use Illuminate\Http\Request;
@@ -22,12 +24,12 @@ class ProductController extends Controller
         return view('admin.products.index');
     }
 
-
     public function create()
     {
-        return view('admin.products.create');
+        $brands = Brand::all();
+        $categories = Category::all();
+        return view('admin.products.create', compact('categories', 'brands'));
     }
-
 
     public function store(StoreRequest $request)
     {
@@ -47,9 +49,12 @@ class ProductController extends Controller
 
         Product::create([
             'price' =>  $data['price'],
+            'category_id' => $data['category'],
+            'brand_id' => $data['brand'], 
             'stock_quantity' => $data['quantity'],
             'image' =>  $imagePath,
             'name' => $data['name'],
+
             'vi' => [
                 'description' => $data['description-vi'],
             ],
@@ -57,11 +62,9 @@ class ProductController extends Controller
                 'description' => $data['description-en'],
             ]
         ]);
+        
         return $this->successResponse(message: 'Thành công!');
     }
-
-
-
 
     public function edit(string $id)
     {
@@ -71,17 +74,18 @@ class ProductController extends Controller
         ]);
     }
 
-
     public function update(UpdateRequest $request, string $id)
     {
         $data = $request->validated();
-
+        $product = Product::query()->where('name', $data['name'])->first();
+        if (!is_null($product)) {
+            return redirect()->back()->withErrors(['msg' => 'Sản phẩm đã tồn tại']);
+        }
         try {
             $product = Product::query()->findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             return redirect()->back()->withErrors(['msg' => 'Sản phẩm không tồn tại']);
         }
-
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -89,7 +93,7 @@ class ProductController extends Controller
             $imagePath = $request->file('image')->storeAs('/products', $newFileName, ['disk' => 'public']);
             $image->move(public_path('images/products'), $newFileName);
         }
-
+        
         $product->fill([
             'price' =>  $data['price'],
             'stock_quantity' => $data['quantity'],
@@ -106,11 +110,15 @@ class ProductController extends Controller
         return $this->successResponse(message: 'Thành công!');
     }
 
-
     public function destroy(string $id)
     {
-        $product = Product::query()->findOrFail($id);
-        $product->delete();
+        try {
+                $product = Product::query()->findOrFail($id);
+                Product::destroy($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+            return $this->errorResponse("Không thành công!");
+        }
+        
         return $this->successResponse('', 'Thành công');
     }
 

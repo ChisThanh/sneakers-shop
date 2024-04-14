@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Home\ProductController;
 use App\Http\Controllers\TranslateController;
 use Illuminate\Http\Request;
@@ -27,11 +29,25 @@ Route::group([
     Route::post("/import-csv", [AdminProductController::class, 'importCSV'])->name("importCSV");
 });
 
-
 Route::group([
     'prefix' => 'cart',
     'as' => 'cart.'
 ], function () {
     Route::get('/', [CartController::class, 'getPaginate'])->name('index');
     Route::get('/cart-detail/{id}', [CartController::class, 'getCartDetail'])->name('getCartDetail');
+});
+
+
+Route::group([
+    'prefix' => 'brand',
+    'as' => 'brand.'
+], function () {
+    Route::get('/', [BrandController::class, 'getPaginate'])->name('index');
+});
+
+Route::group([
+    'prefix' => 'category',
+    'as' => 'category.'
+], function () {
+    Route::get('/', [CategoryController::class, 'getPaginate'])->name('index');
 });

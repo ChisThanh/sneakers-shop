@@ -13,6 +13,7 @@ class ProductController extends Controller
 
     public function index()
     {
+        
         return view('home.products.index');
     }
     public function getPaginate(Request $request)
@@ -20,7 +21,12 @@ class ProductController extends Controller
         $page = $request->input('page', 1);
 
         $products = Product::query()->paginate(5);
+        $products->getCollection()->transform(function ($products) {
 
+            $products->image = $products->url_img;
+
+            return $products;
+        });
         if ($page > $products->lastPage()) {
             return redirect()->route('api.product.index', ['page' =>  $products->lastPage()]);
         }

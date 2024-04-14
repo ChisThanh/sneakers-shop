@@ -16,8 +16,6 @@
     </div>
     <div class="row mb-3">
         <div class="col-12">
-
-
             <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
@@ -25,11 +23,39 @@
                     <input type="text" class="form-control" id="inputNamel4" placeholder="Name" name="name"
                         value="{{ old('name') }}" id="name">
                     <div class="text-danger " id="name-error"></div>
-
                     @error('name')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCategory" class="col-form-label">Category</label>
+                        <select name="category" class="form-control">
+                            <option value="" selected disabled>Select Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="text-danger " id="name-error"></div>
+                        @error('category')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputBrand" class="col-form-label">Brand</label>
+                        <select name="brand" class="form-control">
+                            <option value="" selected disabled>Select Brand</option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                            @endforeach
+                        </select>
+                        <div class="text-danger " id="name-error"></div>
+                        @error('brand')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputPrice4" class="col-form-label">Price</label>
@@ -60,9 +86,9 @@
                             <img id="blah" alt="your image" width="300" height="300"
                                 src="{{ asset('assets_admin/images/tmp-image.png') }}" />
                         </p>
-
                     </div>
                 </div>
+                
                 <div class="form-group">
                     <label for="description-vi">Description - VI</label>
                     <textarea name="description-vi" id="description-vi" class="summernote" rows="100"></textarea>
