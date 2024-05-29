@@ -2,7 +2,6 @@
 
 namespace App;
 
-function test()
+class HelperClass
 {
-    return '';
 }
