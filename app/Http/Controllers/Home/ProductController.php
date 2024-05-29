@@ -20,6 +20,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
+
         $category = Category::all();
         $brand = Brand::all();
         $sort = $request->input('sort', 'default'); // Lấy tham số sort từ URL
