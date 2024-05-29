@@ -19,6 +19,14 @@ class StoreRequest extends FormRequest
                 'required',
                 'string'
             ],
+            'category'=> [
+                'required',
+                'string'
+            ],
+            'brand' => [
+                'required',
+                'string'
+            ],
             'price' => [
                 'required',
                 'numeric',
@@ -48,6 +56,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'name.required' => 'Bạn chưa nhập tên sản phẩm',
+            'category_id.required' => 'Bạn chưa chọn danh mục',
+            'brand_id.required' => 'Bạn chưa chọn thương hiệu',
             'price.required' => 'Bạn chưa nhập giá sản phẩm',
             'quantity.required' => 'Bạn chưa nhập số lượng sản phẩm',
             'description.required' => 'Bạn chưa nhập mô tả sản phẩm',

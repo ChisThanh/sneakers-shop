@@ -145,10 +145,7 @@
 
                     }
                 });
-
             });
-
-
 
             let timerId;
             $('#description-vi').summernote({

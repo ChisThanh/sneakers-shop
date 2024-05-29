@@ -40,18 +40,24 @@
                 <span> Cart </span>
             </a>
         </li>
+
         <li class="side-nav-item">
             <a href="javascript: void(0);" class="side-nav-link">
                 <i class="uil-store"></i>
-                <span> Product </span>
+                <span> Management </span>
                 <span class="menu-arrow"></span>
             </a>
             <ul class="side-nav-second-level" aria-expanded="false">
                 <li>
-                    <a href="{{ route('admin.product.index') }}">Products</a>
+                    <a href="{{ route('admin.brand.index') }}">Brands</a>
                 </li>
+
                 <li>
-                    <a href="{{ route('admin.product.create') }}">Add Products</a>
+                    <a href="{{ route('admin.category.index') }}">Categories</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.product.index') }}">Products</a>
                 </li>
             </ul>
         </li>

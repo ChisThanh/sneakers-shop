@@ -25,7 +25,6 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="text-sm-right">
-
                                 <form action="#" class="d-inline-block">
                                     <label for="file-import" class="btn btn-success mb-2 mr-1">Import
                                         CSV</label>
@@ -117,14 +116,18 @@
                         .append(
                             `<td>${v.name}</td>`)
                         .append(
-                            `<td><img src="{{ asset('assets_admin/images/products/product-1.jpg') }}" alt="image" width="70" height="70"></td>`
+                            `<td><img src="${v.image}" alt="image" width="70" height="70"></td>`
+                            //`<td><img src="{{ asset('assets_admin/images/products/product-1.jpg') }}" alt="image" width="70" height="70"></td>`
                         )
                         .append(`<td>${v.price} VND</td>`)
                         .append(
                             `<td><span class="badge badge-primary">${v.stock_quantity} Cái</span></td>`
                         )
                         .append(
-                            `<td class="table-action"><a href="/admin/product/edit/${v.id}" class="action-icon"> <i class="mdi mdi-pencil"></i></a><a href="##" class="action-icon btn-delete" data-id='${v.id}'> <i class="mdi mdi-delete"></i></a><a href="##" class="action-icon btn-detail" data-id='${v.id}'> <i class="mdi mdi-eye-outline"></i></a></td>`
+                            `<td class="table-action"><a href="/admin/product/edit/${v.id}" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
+                            <a href="##" class="action-icon btn-delete" data-id='${v.id}'> 
+                            <i class="mdi mdi-delete"></i></a><a href="##" class="action-icon btn-detail" data-id='${v.id}'> 
+                            <i class="mdi mdi-eye-outline"></i></a></td>`
                         );
                 });
             }
