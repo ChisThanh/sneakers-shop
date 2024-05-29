@@ -21,7 +21,6 @@ class BrandController extends Controller
     public function getPaginate(Request $request)
     {
         $page = $request->input('page', 1);
-
         $brands = Brand::query()->paginate(5);
         if ($page > $brands->lastPage()) {
             return redirect()->route('api.brand.index', ['page' =>  $brands->lastPage()]);
@@ -79,7 +78,6 @@ class BrandController extends Controller
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
             return $this->errorResponse("Không thành công!");
         }
-        
         return $this->successResponse('', 'Thành công');
     }
 

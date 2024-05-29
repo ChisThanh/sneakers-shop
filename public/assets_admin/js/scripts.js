@@ -378,7 +378,7 @@ Apex.grid = {
   var chartArea = new ApexCharts(document.querySelector('#area'), optionsArea);
   chartArea.render();
   
-  var optionsBar = {
+  /*var optionsBar = {
     chart: {
       type: 'bar',
       height: 380,
@@ -394,11 +394,8 @@ Apex.grid = {
     series: [{
       name: "Clothing",
       data: [42, 52, 16, 55, 59, 51, 45, 32, 26, 33, 44, 51, 42, 56],
-    }, {
-      name: "Food Products",
-      data: [6, 12, 4, 7, 5, 3, 6, 4, 3, 3, 5, 6, 7, 4],
     }],
-    labels: [10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+    labels: [1,2,12,13,14,15,16,17,18,19,20,21,22,23],
     xaxis: {
       labels: {
         show: false
@@ -434,8 +431,89 @@ Apex.grid = {
   }
   
   var chartBar = new ApexCharts(document.querySelector('#bar'), optionsBar);
-  chartBar.render();
+  chartBar.render();*/
   
+  $(document).ready(function() {
+    $.ajax({
+        url: '/admin/get-chart-data',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            drawChart(response);
+            console.log(response);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+
+    function drawChart(data) {
+        var months = [];
+        var totalSales = [];
+        
+        for (var i = 0; i < data.length; i++) {
+            months.push(data[i].month);
+            totalSales.push(data[i].total);
+        }
+        console.log(months);
+        console.log(totalSales);
+        
+        var optionsBar = {
+            chart: {
+                type: 'bar',
+                height: 380,
+                width: '100%',
+                stacked: true,
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                }
+            },
+            colors: ['#00E396'], 
+            series: [{
+                name: "Monthly Sales",
+                data: totalSales,
+            }],
+            xaxis: {
+                categories: months,
+                labels: {
+                    show: true
+                },
+                axisBorder: {
+                    show: true
+                },
+                axisTicks: {
+                    show: true
+                },
+            },
+            yaxis: {
+                axisBorder: {
+                    show: true
+                },
+                axisTicks: {
+                    show: true
+                },
+                labels: {
+                    style: {
+                        colors: '#78909c'
+                    }
+                }
+            },
+            title: {
+                text: 'Monthly Sales',
+                align: 'left',
+                style: {
+                    fontSize: '18px'
+                }
+            }
+        };
+
+        var chartBar = new ApexCharts(document.querySelector('#bar'), optionsBar);
+        chartBar.render();
+    }
+});
+
   
   var optionDonut = {
     chart: {
@@ -488,7 +566,6 @@ Apex.grid = {
   
     return data;
   }
-  
   
   
   var optionsLine = {
