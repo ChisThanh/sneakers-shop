@@ -74,7 +74,7 @@ class BrandController extends Controller
     public function destroy(string $id)
     {
         try {
-                $brand = Brand::query()->findOrFail($id);
+                Brand::query()->findOrFail($id);
                 Brand::destroy($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
             return $this->errorResponse("Không thành công!");

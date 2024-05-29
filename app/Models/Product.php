@@ -28,10 +28,10 @@ class Product extends Model implements TranslatableContract
     ];
     public function getUrlImgAttribute()
     {
-        if (isset($this->image) && strpos($this->image, 'products/') === 0) {
-            return asset('images') . '/' . $this->image;
+        if (isset($this->image) && strpos($this->image, '/img/product') === 0) {
+            return  asset("assets_home") . $this->image;
         } else {
-            return $this->image;
+            return asset('images') . '/' . $this->image;
         }
     }
 }

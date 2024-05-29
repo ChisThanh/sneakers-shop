@@ -42,10 +42,6 @@ Route::post('/chat/broadcast/{senderId}', [ChatController::class, 'broadcast'])-
 // Route Admin
 include __DIR__ . '/admin.php';
 
-Route::get('/test', function () {
-    dd(Cart::with('cart_detail')->first());
-    return 1;
-});
 
 Route::get('cart/view-invoice-pdf/{id}', [PDFController::class, 'viewPdfInvoice']);
 Route::get('cart/down-invoice-pdf/{id}', [PDFController::class, 'downloadPdfInvoice']);
@@ -161,37 +157,29 @@ Route::post('/vnpay-payment', function () {
 Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
     Route::get('/', [ProductController::class, 'index'])->name('index');
     Route::get('/search-image', [ProductController::class, 'searchImage'])->name('searchImage');
-    // Route::get('/create', [ProductController::class, 'create'])->name('create');
-    // Route::post('/create', [ProductController::class, 'store'])->name('store');
-    // Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
-    // Route::put('/edit/{id}', [ProductController::class, 'update'])->name('update');
-    // Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('destroy');
-
 });
-Route::get('/category/{id}',[ProductController::class,'Cateproduct'])->name('cate');
-Route::get('/brand/{id}',[ProductController::class,'Brandproduct'])->name('brand');
-Route::get('/search',[HomeController::class,'searchByName'])->name('searchByName');
-Route::post('/search',[HomeController::class,'searchByName'])->name('searchByName');
-Route::get('/detail/{id}',[ProductController::class,'detailpro'])->name('detailpro');
+
+
+Route::get('/detail/{id}', [ProductController::class, 'detailpro'])->name('detailpro');
+
 //commennt
-Route::post('/comment/{product_id}',[ProductController::class,'post_commnet'])->name('post.commnet');
+Route::post('/comment/{product_id}', [ProductController::class, 'post_commnet'])->name('post.commnet');
+
+
 //Shopping Cart
-Route::group(['prefix'=>'cart'],function()
-{
-    Route::get('/show',[ShoppingCartController::class,'show']) -> name ('cart-show');
-    Route::get('/add/{product}',[ShoppingCartController::class, 'addToCart'] ) -> name ('cart.add');
-    Route::get('/delete/{id}',[ShoppingCartController::class,'deleteCart'])->name('cart.delete');
+Route::group(['prefix' => 'cart'], function () {
+    Route::get('/show', [ShoppingCartController::class, 'show'])->name('cart-show');
+    Route::get('/add/{product}', [ShoppingCartController::class, 'addToCart'])->name('cart.add');
+    Route::get('/delete/{id}', [ShoppingCartController::class, 'deleteCart'])->name('cart.delete');
     Route::post('/update', [ShoppingCartController::class, 'updateCart'])->name('cart.update');
     Route::post('/updateItem/{id}', [ShoppingCartController::class, 'updateCartItem'])->name('cart.updateitem');
-    Route::get('/clear',[ShoppingCartController::class,'clearCart'])->name('cart.clear');
-
+    Route::get('/clear', [ShoppingCartController::class, 'clearCart'])->name('cart.clear');
 });
-Route::get('/test', 'ProductController@test');
+
 
 Route::middleware(['auth'])->group(function () {
-Route::get('/checkout',[OrderController::class,'checkout'])->name('checkout');
-Route::post('/checkout/update', [OrderController::class, 'update'])->name('checkout.update');
-Route::get('/Bill',[OrderController::class,'Bill'])->name('Bill');
-Route::get('/my-order', [OrderController::class,'Myorder'])->name('my-order');
-
+    Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout/update', [OrderController::class, 'update'])->name('checkout.update');
+    Route::get('/bill', [OrderController::class, 'Bill'])->name('bill');
+    Route::get('/my-order', [OrderController::class, 'Myorder'])->name('my-order');
 });

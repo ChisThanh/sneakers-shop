@@ -4,8 +4,8 @@
          <nav class="navbar navbar-expand-lg navbar-light main_box">
              <div class="container">
                  <!-- Brand and toggle get grouped for better mobile display -->
-                 <a class="navbar-brand logo_h" href="{{ __('homepage.home') }}"><img src="{{ asset('assets_home/img/logo.png') }}"
-                         alt=""></a>
+                 <a class="navbar-brand logo_h" href="{{ __('homepage.home') }}"><img
+                         src="{{ asset('assets_home/img/logo.png') }}" alt=""></a>
                  <button class="navbar-toggler" type="button" data-toggle="collapse"
                      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                      aria-label="Toggle navigation">
@@ -20,21 +20,6 @@
                              <a class="nav-link" href="/home">{{ __('homepage.home') }}</a>
                          </li>
                          <li class="nav-item"><a class="nav-link" href="{{ route('product.index') }}">Shop</a></li>
-
-                         <li class="nav-item submenu dropdown">
-                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
-                                 aria-haspopup="true" aria-expanded="false">Shop-tmp</a>
-                             <ul class="dropdown-menu">
-                                 <li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
-                                 <li class="nav-item"><a class="nav-link" href="single-product.html">Product
-                                         Details</a></li>
-                                 <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a>
-                                 </li>
-                                 <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
-                                 <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a>
-                                 </li>
-                             </ul>
-                         </li>
                          <li class="nav-item submenu dropdown">
                              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                  aria-haspopup="true" aria-expanded="false">Blog</a>
@@ -69,13 +54,11 @@
                          <li class="nav-item submenu dropdown">
                              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                  aria-haspopup="true" aria-expanded="false">
-
                                  @auth
                                      {{ Auth::user()->name }}
                                  @else
                                      Pages
                                  @endauth
-
                              </a>
                              <ul class="dropdown-menu">
                                  @auth
@@ -94,27 +77,25 @@
                                          <a class="nav-link"
                                              href="{{ route('register') }}">{{ __('homepage.register') }}</a>
                                      </li>
-
                                  @endguest
-
                              </ul>
                          </li>
-                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                      </ul>
                      <ul class="nav navbar-nav navbar-right">
                          <li class="nav-item">
                              <a href="{{ route('cart-show') }}" class="cart">
-                                 <span class="ti-bag"><span class="text-number">{{ $cart->totalQuantity }}</span></span>
+                                 <span class="ti-bag"><span
+                                         class="text-number">{{ $cart->totalQuantity }}</span></span>
                              </a>
                          </li>
                          <li class="nav-item">
                              <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
                          </li>
                          <li class="nav-item">
-                             <button id="btn-search-image" class="search"><span><svg
-                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                         fill="#000000" version="1.1" id="Capa_1" width="14px" height="14px"
-                                         viewBox="0 0 445.742 445.742" xml:space="preserve">
+                             <button id="btn-search-image" class="search"><span><svg xmlns="http://www.w3.org/2000/svg"
+                                         xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" version="1.1"
+                                         id="Capa_1" width="14px" height="14px" viewBox="0 0 445.742 445.742"
+                                         xml:space="preserve">
                                          <g>
                                              <g>
                                                  <g>
@@ -127,7 +108,8 @@
                                                  </g>
                                              </g>
                                          </g>
-                                     </svg></span></button>
+                                     </svg></span>
+                             </button>
                          </li>
                      </ul>
                  </div>
@@ -136,9 +118,9 @@
      </div>
      <div class="search_input" id="search_input_box">
          <div class="container">
-             <form class="d-flex justify-content-between" method="post" action="{{ route('searchByName') }}">
-                @csrf
-                 <input type="text" class="form-control" id="search_input" placeholder="Search Here" name="name">
+             <form class="d-flex justify-content-between" method="GET" action="/product">
+                 <input type="text" class="form-control" id="search_input" placeholder="Search Here"
+                     name="q">
                  <button type="submit" class="btn"></button>
                  <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
              </form>
@@ -146,6 +128,3 @@
      </div>
  </header>
  <!-- End Header Area -->
-
-
-

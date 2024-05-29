@@ -18,47 +18,46 @@
     <!-- End Banner Area -->
     <div class="container">
         <div class="row">
-            <div class="col-12 text-right mt-3">
+            <div class="col-12 text-right my-3">
                 <span><i class="fa-solid fa-filter d-inline"></i> Sắp xếp:</span>
-                <a href="{{ route('product.index', ['sort' => 'default']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-not-equal"></i> Default</a>
-                <a href="{{ route('product.index', ['sort' => 'az']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-up-a-z"></i> A-Z</a>
-                <a href="{{ route('product.index', ['sort' => 'za']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-down-a-z"></i> Z-A</a>
-                <a href="{{ route('product.index', ['sort' => 'asc']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-up-1-9"></i> Price asc</a>
-                <a href="{{ route('product.index', ['sort' => 'desc']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-down-1-9"></i> Price desc</a>
+                <a href="{{ route('product.index', ['sort' => 'default']) }}" class="btn btn-outline-dark mx-1"><i
+                        class="fa-solid fa-not-equal"></i> Default</a>
+                <a href="{{ route('product.index', ['sort' => 'az']) }}" class="btn btn-outline-dark mx-1"><i
+                        class="fa-solid fa-arrow-up-a-z"></i> A-Z</a>
+                <a href="{{ route('product.index', ['sort' => 'za']) }}" class="btn btn-outline-dark mx-1"><i
+                        class="fa-solid fa-arrow-down-a-z"></i> Z-A</a>
+                <a href="{{ route('product.index', ['sort' => 'asc']) }}" class="btn btn-outline-dark mx-1"><i
+                        class="fa-solid fa-arrow-up-1-9"></i> Price asc</a>
+                <a href="{{ route('product.index', ['sort' => 'desc']) }}" class="btn btn-outline-dark mx-1"><i
+                        class="fa-solid fa-arrow-down-1-9"></i> Price desc</a>
             </div>
-
-
             <div class="col-xl-3 col-lg-4 col-md-5">
                 <div class="sidebar-categories">
-                   @include("home.products.ShowCate")
+                    @include('home.products.categori')
                     </ul>
                 </div>
                 <div class="sidebar-categories">
-                    @include("home.products.ShowBrand")
+                    @include('home.products.brand')
                 </div>
             </div>
             <div class="col-xl-9 col-lg-8 col-md-7">
                 <!-- Start Filter Bar -->
                 <div class="filter-bar d-flex flex-wrap align-items-center">
-
-
                     <div class="pagination">
-                        @if ($product->onFirstPage())
-                        <span class="prev-arrow disabled"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></span>
-                        @else
-                        <a href="{{ $product->appends(request()->input())->previousPageUrl() }}" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
+                        @if (!$product->onFirstPage())
+                            <a href="{{ $product->appends(request()->input())->previousPageUrl() }}" class="prev-arrow"><i
+                                    class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
                         @endif
 
                         @for ($i = 1; $i <= $product->lastPage(); $i++)
-                         <a href="{{ $product->appends(request()->input())->url($i) }}" class="{{ $product->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
+                            <a href="{{ $product->appends(request()->input())->url($i) }}"
+                                class="{{ $product->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
                         @endfor
 
                         @if ($product->hasMorePages())
-                         <a href="{{ $product->appends(request()->input())->nextPageUrl() }}" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                        @else
-                        <span class="next-arrow disabled"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                            <a href="{{ $product->appends(request()->input())->nextPageUrl() }}" class="next-arrow"><i
+                                    class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                         @endif
-
                     </div>
                 </div>
                 <!-- End Filter Bar -->
@@ -66,68 +65,44 @@
                 <section class="lattest-product-area pb-40 category-list">
                     <div class="row">
                         @foreach ($product as $item)
-                           <!-- single product -->
-                        <div class="col-lg-4 col-md-6">
-                            <div class="single-product">
-                                <img class="img-fluid" src="{{ $item->image }}.jpg"
-                                    alt="">
-                                <div class="product-details">
-                                    <h6>{{ $item->name }}</h6>
-                                    <div class="price">
-                                        <h6>{{ $item->price_sale }}</h6>
-                                        <h6 class="l-through">{{ $item->price }}</h6>
-                                    </div>
-                                    <div class="prd-bottom">
+                            <!-- single product -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="single-product">
+                                    <a href="{{ route('detailpro', $item->id) }}">
+                                        <img class="img-fluid" src="{{ $item->image }}" alt="">
+                                    </a>
+                                    <div class="product-details">
+                                        <h6>{{ $item->name }}</h6>
+                                        <div class="price">
+                                            <h6>{{ $item->price_sale }}</h6>
+                                            <h6 class="l-through">{{ $item->price }}</h6>
+                                        </div>
+                                        <div class="prd-bottom">
 
-                                        <a href="{{ route('cart.add',$item['id']) }}" class="social-info">
-                                            <span class="ti-bag"></span>
-                                            <p class="hover-text">add to bag</p>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-heart"></span>
-                                            <p class="hover-text">Wishlist</p>
-                                        </a>
-                                        <a href="" class="social-info">
-                                            <span class="lnr lnr-sync"></span>
-                                            <p class="hover-text">compare</p>
-                                        </a>
-                                        <a href="{{ route('detailpro',['id'=>$item->id]) }}" class="social-info">
-                                            <span class="lnr lnr-move"></span>
-                                            <p class="hover-text">view more</p>
-                                        </a>
+                                            <a href="{{ route('cart.add', $item['id']) }}" class="social-info">
+                                                <span class="ti-bag"></span>
+                                                <p class="hover-text">add to bag</p>
+                                            </a>
+                                            <a href="" class="social-info">
+                                                <span class="lnr lnr-heart"></span>
+                                                <p class="hover-text">Wishlist</p>
+                                            </a>
+                                            <a href="" class="social-info">
+                                                <span class="lnr lnr-sync"></span>
+                                                <p class="hover-text">compare</p>
+                                            </a>
+                                            <a href="{{ route('detailpro', ['id' => $item->id]) }}" class="social-info">
+                                                <span class="lnr lnr-move"></span>
+                                                <p class="hover-text">view more</p>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
-
-
                     </div>
                 </section>
                 <!-- End Best Seller -->
-                <!-- Start Filter Bar -->
-                <div class="filter-bar d-flex flex-wrap align-items-center">
-
-                    <div class="pagination">
-                        @if ($product->onFirstPage())
-                        <span class="prev-arrow disabled"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></span>
-                        @else
-                        <a href="{{ $product->appends(request()->input())->previousPageUrl() }}" class="prev-arrow"><i class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
-                        @endif
-
-                        @for ($i = 1; $i <= $product->lastPage(); $i++)
-                         <a href="{{ $product->appends(request()->input())->url($i) }}" class="{{ $product->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
-                        @endfor
-
-                        @if ($product->hasMorePages())
-                         <a href="{{ $product->appends(request()->input())->nextPageUrl() }}" class="next-arrow"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                        @else
-                        <span class="next-arrow disabled"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                        @endif
-
-                    </div>
-                </div>
-                <!-- End Filter Bar -->
             </div>
         </div>
     </div>
