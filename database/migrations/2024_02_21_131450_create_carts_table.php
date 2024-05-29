@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('payment_status')->default(0);
             $table->integer('payment_method')->default(0);
             $table->integer('status')->default(0);
+
             $table->timestamps();
         });
     }

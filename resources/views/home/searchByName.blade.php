@@ -18,16 +18,15 @@
     <!-- End Banner Area -->
     <div class="container">
         <div class="row">
+
             <div class="col-12 text-right mt-3">
-                <span><i class="fa-solid fa-filter d-inline"></i> Sắp xếp:</span>
-                <a href="{{ route('product.index', ['sort' => 'default']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-not-equal"></i> Default</a>
-                <a href="{{ route('product.index', ['sort' => 'az']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-up-a-z"></i> A-Z</a>
-                <a href="{{ route('product.index', ['sort' => 'za']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-down-a-z"></i> Z-A</a>
-                <a href="{{ route('product.index', ['sort' => 'asc']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-up-1-9"></i> Price asc</a>
-                <a href="{{ route('product.index', ['sort' => 'desc']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-down-1-9"></i> Price desc</a>
+                <span><i class="fa-solid fa-filter d-inline"></i> Sort</span>
+                <a href="{{ route('searchByName', ['sort' => 'default']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-not-equal"></i> Default</a>
+                <a href="{{ route('searchByName', ['sort' => 'az']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-up-a-z"></i> A-Z</a>
+                <a href="{{ route('searchByName', ['sort' => 'za']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-down-a-z"></i> Z-A</a>
+                <a href="{{ route('searchByName', ['sort' => 'asc']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-up-1-9"></i> Price asc</a>
+                <a href="{{ route('searchByName', ['sort' => 'desc']) }}" class="btn btn-outline-dark mx-1"><i class="fa-solid fa-arrow-down-1-9"></i> Price desc</a>
             </div>
-
-
             <div class="col-xl-3 col-lg-4 col-md-5">
                 <div class="sidebar-categories">
                    @include("home.products.ShowCate")
@@ -91,7 +90,7 @@
                                             <span class="lnr lnr-sync"></span>
                                             <p class="hover-text">compare</p>
                                         </a>
-                                        <a href="{{ route('detailpro',['id'=>$item->id]) }}" class="social-info">
+                                        <a href="" class="social-info">
                                             <span class="lnr lnr-move"></span>
                                             <p class="hover-text">view more</p>
                                         </a>

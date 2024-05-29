@@ -2,10 +2,15 @@
 
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Home\CategoryController;
+use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\OrderController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Home\ProductController;
+use App\Http\Controllers\Home\ShoppingCart;
+use App\Http\Controllers\Home\ShoppingCartController;
 use App\Http\Controllers\SocialiteController;
 use App\Mail\CustomMail;
 use App\Models\Cart;
@@ -161,7 +166,32 @@ Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
     // Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('edit');
     // Route::put('/edit/{id}', [ProductController::class, 'update'])->name('update');
     // Route::delete('/destroy/{id}', [ProductController::class, 'destroy'])->name('destroy');
+
 });
+Route::get('/category/{id}',[ProductController::class,'Cateproduct'])->name('cate');
+Route::get('/brand/{id}',[ProductController::class,'Brandproduct'])->name('brand');
+Route::get('/search',[HomeController::class,'searchByName'])->name('searchByName');
+Route::post('/search',[HomeController::class,'searchByName'])->name('searchByName');
+Route::get('/detail/{id}',[ProductController::class,'detailpro'])->name('detailpro');
+//commennt
+Route::post('/comment/{product_id}',[ProductController::class,'post_commnet'])->name('post.commnet');
+//Shopping Cart
+Route::group(['prefix'=>'cart'],function()
+{
+    Route::get('/show',[ShoppingCartController::class,'show']) -> name ('cart-show');
+    Route::get('/add/{product}',[ShoppingCartController::class, 'addToCart'] ) -> name ('cart.add');
+    Route::get('/delete/{id}',[ShoppingCartController::class,'deleteCart'])->name('cart.delete');
+    Route::post('/update', [ShoppingCartController::class, 'updateCart'])->name('cart.update');
+    Route::post('/updateItem/{id}', [ShoppingCartController::class, 'updateCartItem'])->name('cart.updateitem');
+    Route::get('/clear',[ShoppingCartController::class,'clearCart'])->name('cart.clear');
 
-
+});
 Route::get('/test', 'ProductController@test');
+
+Route::middleware(['auth'])->group(function () {
+Route::get('/checkout',[OrderController::class,'checkout'])->name('checkout');
+Route::post('/checkout/update', [OrderController::class, 'update'])->name('checkout.update');
+Route::get('/Bill',[OrderController::class,'Bill'])->name('Bill');
+Route::get('/my-order', [OrderController::class,'Myorder'])->name('my-order');
+
+});

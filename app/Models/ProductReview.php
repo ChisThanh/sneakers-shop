@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ProductReview extends Model
 {
     use HasFactory;
+    protected $fillable=['user_id','product_id','comment','rating'];
+    public function user()
+    {
+        return $this->hasone(User::class,'id','user_id');
+    }
 }

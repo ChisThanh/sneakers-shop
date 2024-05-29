@@ -25,4 +25,6 @@ class CartDetail extends Model
     {
         return $this->product->name;
     }
+
+
 }

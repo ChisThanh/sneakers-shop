@@ -4,7 +4,7 @@
          <nav class="navbar navbar-expand-lg navbar-light main_box">
              <div class="container">
                  <!-- Brand and toggle get grouped for better mobile display -->
-                 <a class="navbar-brand logo_h" href="index.html"><img src="{{ asset('assets_home/img/logo.png') }}"
+                 <a class="navbar-brand logo_h" href="{{ __('homepage.home') }}"><img src="{{ asset('assets_home/img/logo.png') }}"
                          alt=""></a>
                  <button class="navbar-toggler" type="button" data-toggle="collapse"
                      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -103,8 +103,8 @@
                      </ul>
                      <ul class="nav navbar-nav navbar-right">
                          <li class="nav-item">
-                             <a href="#" class="cart">
-                                 <span class="ti-bag"><span class="text-number">1</span></span>
+                             <a href="{{ route('cart-show') }}" class="cart">
+                                 <span class="ti-bag"><span class="text-number">{{ $cart->totalQuantity }}</span></span>
                              </a>
                          </li>
                          <li class="nav-item">
@@ -136,8 +136,9 @@
      </div>
      <div class="search_input" id="search_input_box">
          <div class="container">
-             <form class="d-flex justify-content-between">
-                 <input type="text" class="form-control" id="search_input" placeholder="Search Here">
+             <form class="d-flex justify-content-between" method="post" action="{{ route('searchByName') }}">
+                @csrf
+                 <input type="text" class="form-control" id="search_input" placeholder="Search Here" name="name">
                  <button type="submit" class="btn"></button>
                  <span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
              </form>
@@ -145,3 +146,6 @@
      </div>
  </header>
  <!-- End Header Area -->
+
+
+

@@ -8,6 +8,8 @@
     <link rel="shortcut icon" href="{{ asset('assets_home/img/fav.png') }}">
     <!-- meta character set -->
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- Site Title -->
     <title>Karma Shop</title>
     <!--
@@ -25,8 +27,10 @@
     <link rel="stylesheet" href="{{ asset('assets_home/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/style.css') }}">
+
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
     @stack('css')
 </head>
 
@@ -230,6 +234,11 @@
 <script src="{{ asset('assets_home/js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('assets_home/js/main.js') }}"></script>
 <script src="{{ asset('assets_home/js/helper.js') }}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
+
 @auth
     <script>
         var userId = '{{ Auth::id() }}';

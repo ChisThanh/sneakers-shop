@@ -15,13 +15,35 @@ class Cart extends Model
         'user_id',
         'delivery_date',
         'total',
-        'status',
+        'payment_status',
+        'payment_method',
+        'status'
     ];
 
     public function getUserNameAttribute()
     {
         return $this->user->name;
     }
+    public function getdeli()
+    {
+        return $this->delivery_date;
+    }
+    public function gettotal()
+    {
+        return $this->total;
+    }
+    public function getstatus()
+    {
+        return $this->status;
+    }
+    public function getpayment()
+    {
+        return $this->payment_status;
+    }
+    public function getpaymentmethod()
+    {
+        return $this->payment_method;
+        }
 
     public function user()
     {

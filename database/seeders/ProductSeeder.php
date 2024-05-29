@@ -18,20 +18,20 @@ class ProductSeeder extends Seeder
         $faker = \Faker\Factory::create();
 
         $brands = [];
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $brands[] = Brand::create([
                 'name' => $faker->company,
             ])->id;
         }
 
         $categories = [];
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $categories[] = Category::create([
                 'name' => $faker->word,
             ])->id;
         }
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             Product::create([
                 'name' => $faker->name,
                 'category_id' => $faker->randomElement($categories),
