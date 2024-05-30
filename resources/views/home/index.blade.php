@@ -202,7 +202,7 @@
                         <!-- single product -->
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <a href="{{ route('detailpro', ['id' => $item->id]) }}">
+                                <a href="{{ route('product.detailpro', ['id' => $item->id]) }}">
                                     <img class="img-fluid" src="{{ $item->image }}" alt="">
                                 </a>
                                 <div class="product-details">
@@ -225,7 +225,8 @@
                                             <span class="lnr lnr-sync"></span>
                                             <p class="hover-text">compare</p>
                                         </a>
-                                        <a href="{{ route('detailpro', ['id' => $item->id]) }}" class="social-info">
+                                        <a href="{{ route('product.detailpro', ['id' => $item->id]) }}"
+                                            class="social-info">
                                             <span class="lnr lnr-move"></span>
                                             <p class="hover-text">view more</p>
                                         </a>
@@ -257,7 +258,7 @@
                         <!-- single product -->
                         <div class="col-lg-3 col-md-6">
                             <div class="single-product">
-                                <a href="{{ route('detailpro', ['id' => $item->id]) }}">
+                                <a href="{{ route('product.detailpro', ['id' => $item->id]) }}">
                                     <img class="img-fluid" src="{{ $item->image }}" alt="">
                                 </a>
                                 <div class="product-details">
@@ -280,7 +281,8 @@
                                             <span class="lnr lnr-sync"></span>
                                             <p class="hover-text">compare</p>
                                         </a>
-                                        <a href="{{ route('detailpro', ['id' => $item->id]) }}" class="social-info">
+                                        <a href="{{ route('product.detailpro', ['id' => $item->id]) }}"
+                                            class="social-info">
                                             <span class="lnr lnr-move"></span>
                                             <p class="hover-text">view more</p>
                                         </a>
@@ -332,7 +334,7 @@
                         <!-- single exclusive carousel -->
                         @foreach ($product->slice(0, 8) as $item)
                             <div class="single-exclusive-slider">
-                                <a href="{{ route('detailpro', ['id' => $item->id]) }}">
+                                <a href="{{ route('product.detailpro', ['id' => $item->id]) }}">
                                     <img class="img-fluid" src="{{ $item->image }}" alt="">
                                 </a>
                                 <div class="product-details">

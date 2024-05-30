@@ -68,7 +68,7 @@
                             @foreach ($order->details as $item)
                                 <tr>
                                     <td>
-                                        <p>{{ $item['name'] }}</p>
+                                        <p>{{ $item['product_name'] }}</p>
                                     </td>
                                     <td>
                                         <h5>{{ $item['quantity'] }}</h5>

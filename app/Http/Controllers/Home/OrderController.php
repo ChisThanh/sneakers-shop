@@ -69,10 +69,13 @@ class OrderController extends Controller
         $user = auth()->user();
 
         $order = Bill::query()
-            ->with('details')
+            ->with('details.product')
             ->where('id', $request["order_id"])
+            ->where('user_id', auth()->user()->id)
             ->first();
 
+        if (!$order)
+            return back();
         // Quy định vnp_ResponseCode mã trả lời 00 ứng với kết quả Thành công cho tất cả các API
         if ($request["vnp_ResponseCode"] == '00') {
             $order->update([

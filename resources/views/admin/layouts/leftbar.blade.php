@@ -14,16 +14,10 @@
         <li class="side-nav-title side-nav-item">Navigation</li>
 
         <li class="side-nav-item">
-            <a href="javascript: void(0);" class="side-nav-link">
+            <a href="/admin" class="side-nav-link">
                 <i class="uil-home-alt"></i>
-                <span class="badge badge-info badge-pill float-right">4</span>
                 <span> Dashboards </span>
             </a>
-            <ul class="side-nav-second-level" aria-expanded="false">
-                <li>
-                    <a href="/admin">Analytics</a>
-                </li>
-            </ul>
         </li>
 
         <li class="side-nav-title side-nav-item">Apps</li>

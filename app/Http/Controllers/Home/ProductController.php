@@ -5,11 +5,8 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
 use App\Models\Brand;
-use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductTranslation;
-use App\Models\Size;
 use Illuminate\Http\Request;
 use App\Models\ProductReview;
 
@@ -20,24 +17,68 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        
-        return view('home.products.index');
+        $category = Category::all();
+        $brand = Brand::all();
+        $sort = $request->input('sort', 'default');
+
+        $q = $request->input('q');
+        $category_id = $request->get("category_id") ?? null;
+        $brand_id = $request->get("brand_id") ?? null;
+
+        $query = Product::query();
+
+        if ($category_id !== null)
+            $query->where('category_id', $category_id);
+
+        if ($brand_id !== null)
+            $query->where('brand_id', $brand_id);
+
+        if ($q)
+            $result = $query->where("name", "like", '%' . $q . '%');
+
+
+        switch ($sort) {
+            case 'az':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'za':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'asc':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'desc':
+                $query->orderBy('price', 'desc');
+                break;
+            default:
+                break;
+        }
+
+        $product = $query->paginate(6);
+
+        $product->transform(function ($product) {
+            $product->image = $product->url_img;
+            return $product;
+        });
+
+        return view('home.products.index', compact('category', 'brand', 'product'));
     }
+
 
     public function getPaginate(Request $request)
     {
         $page = $request->input('page', 1);
 
         $products = Product::query()->paginate(5);
-        $products->getCollection()->transform(function ($products) {
-
+        $products->transform(function ($products) {
             $products->image = $products->url_img;
-
             return $products;
         });
+
         if ($page > $products->lastPage()) {
             return redirect()->route('api.product.index', ['page' =>  $products->lastPage()]);
         }
+
         return $products;
     }
 

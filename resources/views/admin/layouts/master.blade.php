@@ -12,8 +12,9 @@
     <!-- App css -->
     <link href="{{ asset('assets_admin/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets_admin/css/app-modern.min.css') }}" rel="stylesheet" type="text/css" id="light-style" />
-    <link href="{{ asset('assets_admin/css/app-modern-dark.min.css') }}" rel="stylesheet" type="text/css" id="dark-style" />
-    
+    <link href="{{ asset('assets_admin/css/app-modern-dark.min.css') }}" rel="stylesheet" type="text/css"
+        id="dark-style" />
+
     @stack('css')
 
 

@@ -16,11 +16,14 @@ class BillDetail extends Model
         'product_id',
         'quantity',
         'price',
+        'product_name'
     ];
+
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+
     public function getProductNameAttribute()
     {
         return $this->product->name;

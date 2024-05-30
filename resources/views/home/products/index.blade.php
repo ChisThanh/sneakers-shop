@@ -33,11 +33,26 @@
             </div>
             <div class="col-xl-3 col-lg-4 col-md-5">
                 <div class="sidebar-categories">
-                    @include('home.products.categori')
+                    <div class="head">Category Sneaker</div>
+                    <ul class="main-categories">
+                        <li class="main-nav-list">
+                            @foreach ($category as $item)
+                                <a href="/product?category_id={{ $item->id }}"><span
+                                        class="lnr lnr-arrow-right"></span>{{ $item->name }}</a>
+                            @endforeach
+                        </li>
                     </ul>
                 </div>
                 <div class="sidebar-categories">
-                    @include('home.products.brand')
+                    <div class="head">Brands</div>
+                    <ul class="main-categories">
+                        <li class="main-nav-list">
+                            @foreach ($brand as $item)
+                                <a href="/product/?brand_id={{ $item->id }}"><span
+                                        class="lnr lnr-arrow-right"></span>{{ $item->name }}</a>
+                            @endforeach
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col-xl-9 col-lg-8 col-md-7">
@@ -68,7 +83,7 @@
                             <!-- single product -->
                             <div class="col-lg-4 col-md-6">
                                 <div class="single-product">
-                                    <a href="{{ route('detailpro', $item->id) }}">
+                                    <a href="{{ route('product.detailpro', $item->id) }}">
                                         <img class="img-fluid" src="{{ $item->image }}" alt="">
                                     </a>
                                     <div class="product-details">
@@ -91,7 +106,8 @@
                                                 <span class="lnr lnr-sync"></span>
                                                 <p class="hover-text">compare</p>
                                             </a>
-                                            <a href="{{ route('detailpro', ['id' => $item->id]) }}" class="social-info">
+                                            <a href="{{ route('product.detailpro', ['id' => $item->id]) }}"
+                                                class="social-info">
                                                 <span class="lnr lnr-move"></span>
                                                 <p class="hover-text">view more</p>
                                             </a>
