@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Bill;
 use Illuminate\Http\Request;
@@ -16,5 +17,19 @@ class DashboardController extends Controller
             ->groupBy('thang')
             ->get();
         return view('admin.dashboard.index', compact('chartData'));
+    }
+
+
+    public function getChartData(Request $request)
+    {
+        $chartData = Bill::select(
+            DB::raw('MONTH(delivery_date) as month'),
+            DB::raw('SUM(total) as total')
+        )
+            ->where('status', 1)
+            ->groupBy(DB::raw('MONTH(delivery_date)'))
+            ->orderBy(DB::raw('month'), 'asc')
+            ->get();
+        return response()->json($chartData);
     }
 }

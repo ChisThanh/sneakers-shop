@@ -6,11 +6,18 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 // Route::middleware(['admin', 'auth'])->prefix('admin')->name('admin.')->group(function () {
 Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::get('/get-chart-data', [DashboardController::class, 'getChartData'])->name('index');
     Route::get('/chat', [ChatController::class, 'index'])->name('chat');
 
     // route product
@@ -39,7 +46,7 @@ Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
         Route::delete('/destroy/{id}', [BrandController::class, 'destroy'])->name('destroy');
     });
 
-    //route brand
+    //route category
     Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
         Route::get('/', [CategoryController::class, 'index'])->name('index');
         Route::get('/create', [CategoryController::class, 'create'])->name('create');
@@ -47,5 +54,16 @@ Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('edit');
         Route::put('/edit/{id}', [CategoryController::class, 'update'])->name('update');
         Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+    });
+
+    //route user
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::get('/', [UserController::class, 'index'])->name('index');
+    });
+
+    //route setting
+    Route::group(['prefix' => 'setting', 'as' => 'setting.'], function () {
+        Route::get('/', [SettingController::class, 'index'])->name('index');
+        Route::post('/change', [SettingController::class, 'change'])->name('change');
     });
 });

@@ -31,8 +31,7 @@
                     <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" id="topbar-languagedrop"
                         href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('assets_admin/images/flags/us.jpg') }}" alt="user-image" class="mr-1"
-                            height="12"> <span class="align-middle">English</span> <i
-                            class="mdi mdi-chevron-down"></i>
+                            height="12"> <span class="align-middle">English</span> <i class="mdi mdi-chevron-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu"
                         aria-labelledby="topbar-languagedrop">
@@ -46,8 +45,8 @@
 
                         <!-- item-->
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="{{ asset('assets_admin/images/flags/italy.jpg') }}" alt="user-image"
-                                class="mr-1" height="12">
+                            <img src="{{ asset('assets_admin/images/flags/italy.jpg') }}" alt="user-image" class="mr-1"
+                                height="12">
                             <span class="align-middle">Italian</span>
                         </a>
 
@@ -114,8 +113,7 @@
                                 </div>
                                 <div class="col">
                                     <a class="dropdown-icon-item" href="#">
-                                        <img src="{{ asset('assets_admin/images/brands/github.png') }}"
-                                            alt="Github">
+                                        <img src="{{ asset('assets_admin/images/brands/github.png') }}" alt="Github">
                                         <span>GitHub</span>
                                     </a>
                                 </div>
@@ -134,8 +132,7 @@
 
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown"
-                        id="topbar-userdrop" href="#" role="button" aria-haspopup="true"
-                        aria-expanded="false">
+                        id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="account-user-avatar">
                             <img src="{{ asset('assets_admin/images/users/avatar-1.jpg') }}" alt="user-image"
                                 class="rounded-circle">
@@ -143,7 +140,7 @@
                         <span>
                             {{-- <span class="account-user-name"
                                 style="text-transform: capitalize;">{{ Auth::user()->name }}</span>
-                            <span class="account-position">Founder</span> --}}
+                        <span class="account-position">Founder</span> --}}
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu profile-dropdown"
@@ -160,7 +157,7 @@
                         </a>
 
                         <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <a href="{{ route('admin.setting.index') }}" class="dropdown-item notify-item">
                             <i class="mdi mdi-account-edit mr-1"></i>
                             <span>Settings</span>
                         </a>
@@ -204,7 +201,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
+                <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="searc-dropdown">
                     <!-- item-->
                     <div class="dropdown-header noti-title">
                         <h5 class="text-overflow mb-2">Found <span class="text-danger">17</span> results</h5>

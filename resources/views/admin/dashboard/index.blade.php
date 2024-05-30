@@ -5,6 +5,7 @@
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="assets_admin/css/styles.css" />
 
+
     <div id="wrapper">
         <div class="content-area">
             <div class="container-fluid">
@@ -54,12 +55,12 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets_admin/js/apexcharts.js"></script>
-    <script src="assets_admin/js/data.js"></script>
     <script src="assets_admin/js/scripts.js"></script>
 
     <script></script>

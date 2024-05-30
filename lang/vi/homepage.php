@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'home' => 'Trang chủ',
     'languages' => 'Ngôn ngữ',
     'vietnamese' => 'Tiếng Việt',
@@ -12,4 +11,5 @@ return [
     'username' => 'Tên tài khoản',
     'password' => 'Mật khẩu',
     'ForgotPassword' => 'Quên mật khẩu?',
+    
 ];

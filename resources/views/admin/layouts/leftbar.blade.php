@@ -21,7 +21,7 @@
             </a>
             <ul class="side-nav-second-level" aria-expanded="false">
                 <li>
-                    <a href="dashboard-analytics.html">Analytics</a>
+                    <a href="/admin">Analytics</a>
                 </li>
             </ul>
         </li>
@@ -58,6 +58,10 @@
 
                 <li>
                     <a href="{{ route('admin.product.index') }}">Products</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.user.index') }}">Users</a>
                 </li>
             </ul>
         </li>
