@@ -29,9 +29,9 @@
             </a>
         </li>
         <li class="side-nav-item">
-            <a href="{{ route('admin.cart.index') }}" class="side-nav-link">
+            <a href="{{ route('admin.bill.index') }}" class="side-nav-link">
                 <i class="mdi mdi-cart"></i>
-                <span> Cart </span>
+                <span> Bills </span>
             </a>
         </li>
 

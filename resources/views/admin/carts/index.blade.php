@@ -10,7 +10,7 @@
                         <li class="breadcrumb-item active">Carts</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Carts</h4>
+                <h4 class="page-title">Bills</h4>
             </div>
         </div>
     </div>
@@ -100,10 +100,6 @@
             }
 
             function updateUI(data) {
-
-                console.log(data);
-
-
                 $('#tbody-main').empty();
                 $.each(data.data, function(i, v) {
                     var select = $('<select class="custom-select select-status">');
@@ -218,7 +214,6 @@
                 var closestTr = $(this).closest('td');
                 var dataId = closestTr.attr('data-id');
                 var selectedValue = $(this).val();
-                console.log(selectedValue);
                 swal({
                     title: 'Bạn có chắc chắn thay đổi trình trạng đơn?',
                     type: 'warning',

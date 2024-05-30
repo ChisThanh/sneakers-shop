@@ -18,6 +18,7 @@ class BrandController extends Controller
     {
         return view('admin.brands.index');
     }
+
     public function getPaginate(Request $request)
     {
         $page = $request->input('page', 1);

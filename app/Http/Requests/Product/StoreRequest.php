@@ -19,7 +19,7 @@ class StoreRequest extends FormRequest
                 'required',
                 'string'
             ],
-            'category'=> [
+            'category' => [
                 'required',
                 'string'
             ],
@@ -32,10 +32,14 @@ class StoreRequest extends FormRequest
                 'numeric',
                 'min:0'
             ],
+            'price_sale' => [
+                'required',
+                'numeric',
+                'min:0'
+            ],
             'image' => [
                 'required',
                 'image',
-                // 'size:1024'  // only 1MB is allowed
             ],
             'quantity' => [
                 'required',

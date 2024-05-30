@@ -23,6 +23,7 @@ class Product extends Model implements TranslatableContract
         'category_id',
         'brand_id',
         'price',
+        'price_sale',
         'image',
         'stock_quantity'
     ];

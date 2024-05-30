@@ -39,20 +39,20 @@ class ProductController extends Controller
             return redirect()->back()->withErrors(['msg' => 'Sản phẩm đã tồn tại']);
         }
 
-        $imagePath = '';
+        $imagePath = 'products/';
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $newFileName = time() . '.' . $image->getClientOriginalExtension();
-            $imagePath = $request->file('image')->storeAs('/products', $newFileName, ['disk' => 'public']);
             $image->move(public_path('images/products'), $newFileName);
         }
 
         Product::create([
+            "price_sale" => $data['price_sale'],
             'price' =>  $data['price'],
             'category_id' => $data['category'],
             'brand_id' => $data['brand'],
             'stock_quantity' => $data['quantity'],
-            'image' =>  $imagePath,
+            'image' =>  $imagePath . $newFileName,
             'name' => $data['name'],
 
             'vi' => [
@@ -69,6 +69,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::query()->findOrFail($id);
+
         return view('admin.products.edit', [
             'product' => $product
         ]);
@@ -77,10 +78,6 @@ class ProductController extends Controller
     public function update(UpdateRequest $request, string $id)
     {
         $data = $request->validated();
-        $product = Product::query()->where('name', $data['name'])->first();
-        if (!is_null($product)) {
-            return redirect()->back()->withErrors(['msg' => 'Sản phẩm đã tồn tại']);
-        }
         try {
             $product = Product::query()->findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
@@ -90,7 +87,7 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $newFileName = time() . '.' . $image->getClientOriginalExtension();
-            $imagePath = $request->file('image')->storeAs('/products', $newFileName, ['disk' => 'public']);
+
             $image->move(public_path('images/products'), $newFileName);
         }
 
@@ -113,7 +110,7 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         try {
-            $product = Product::query()->findOrFail($id);
+            Product::query()->findOrFail($id);
             Product::destroy($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             return $this->errorResponse("Không thành công!");

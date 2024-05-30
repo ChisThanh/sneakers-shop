@@ -33,7 +33,7 @@
                     @enderror
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="inputPrice4" class="col-form-label">Price</label>
                         <input type="number" class="form-control" id="inputPrice4" placeholder="Price" name="price"
                             value="{{ $product->price }}">
@@ -41,7 +41,15 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
+                        <label for="inputPrice4" class="col-form-label">Price sale</label>
+                        <input type="number" class="form-control" id="inputPrice4" placeholder="Price" name="price_sale"
+                            value="{{ $product->price_sale }}">
+                        @error('price_sale')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
                         <label for="inputQuantitty4" class="col-form-label">Quantitty</label>
                         <input type="number" class="form-control" id="inputQuantitty4" placeholder="Quantitty"
                             name="quantity" value="{{ $product->stock_quantity }}">
@@ -60,10 +68,7 @@
                             onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
                         <p>
                             <img id="blah" alt="your image" width="300" height="300"
-                                src="
-                                @if ($product->image !== '') {{ asset('images') . '/' . $product->image }} @else
-                                {{ asset('assets_admin/images/tmp-image.png') }} @endif
-                                " />
+                                src="{{ $product->url_img }}" />
                         </p>
 
                     </div>
@@ -108,8 +113,7 @@
                 }).catch(swal.noop)
             @enderror
 
-            $('#description-vi').summernote('code', '{!! $product->translate('vi')->description !!}');
-            $('#description-en').summernote('code', '{!! $product->translate('en')->description !!}');
+
 
             $('form').submit(function(e) {
                 e.preventDefault();
@@ -172,6 +176,9 @@
                 height: 150,
                 toolbar: false,
             });
+
+            $('#description-vi').summernote('code', "{!! $product->translate('vi')->description !!}");
+            $('#description-en').summernote('code', "{!! $product->translate('en')->description !!}");
 
             function translateApi(contents) {
                 $.ajax({

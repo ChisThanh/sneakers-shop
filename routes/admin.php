@@ -12,9 +12,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-// Route::middleware(['admin', 'auth'])->prefix('admin')->name('admin.')->group(function () {
-Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
-
+Route::middleware(['admin', 'auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/get-chart-data', [DashboardController::class, 'getChartData'])->name('index');
     Route::get('/chat', [ChatController::class, 'index'])->name('chat');
@@ -30,7 +28,7 @@ Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
     });
 
     // route cart
-    Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
+    Route::group(['prefix' => 'bill', 'as' => 'bill.'], function () {
         Route::get('/', [BillController::class, 'index'])->name('index');
         Route::get('/edit/{id}', [BillController::class, 'update'])->name('edit');
     });

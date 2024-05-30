@@ -112,7 +112,7 @@ class ProductController extends Controller
 
         $productReviews = ProductReview::where('product_id', $id)->get();
 
-        $ratingAvg = $productReviews->avg('rating');
+        $ratingAvg = round($productReviews->avg('rating'), 2);
 
         $rating_user = $productReviews->pluck('rating', 'user_id');
 

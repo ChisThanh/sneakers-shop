@@ -17,6 +17,7 @@ class Bill extends Model
         'total',
         'payment_status',
         'payment_method',
+        'status',
     ];
 
     public function getUserNameAttribute()

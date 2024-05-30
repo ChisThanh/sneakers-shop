@@ -53,7 +53,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <h5 class="price">{{ $item['price'] }}</h5>
+                                                <h5 class="price">{{ formatCurrency($item['price']) }} VND</h5>
                                             </td>
                                             <td>
                                                 <div class="product_count">
@@ -66,7 +66,8 @@
                                             </td>
 
                                             <td>
-                                                <h5 class="total">{{ $item['quantity'] * $item['price'] }}</h5>
+                                                <h5 class="total">{{ formatCurrency($item['quantity'] * $item['price']) }}
+                                                    VND</h5>
                                             </td>
                                             <td>
                                                 <h5> <a onclick="return confirm('Bạn có muốn xóa?')"
@@ -90,7 +91,7 @@
                                             <h5>Subtotal</h5>
                                         </td>
                                         <td>
-                                            <h5>{{ $cart->totalPrice }}</h5>
+                                            <h5>{{ formatCurrency($cart->totalPrice) }} VND</h5>
                                         </td>
                                     </tr>
                                     <tr class="out_button_area">
@@ -124,7 +125,7 @@
             $(".input-text.qty").change(function(e) {
                 var $parent = $(this).closest('tr');
                 var price = $parent.find('.price').text();
-
+                price = parseInt(price.replace(/,/g, ''));
                 var productId = $(this).data('id');
                 var qty = $(this).val();
 
@@ -142,7 +143,7 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        el_total.text(`${(qty * price).toFixed(2)}`);
+                        el_total.text(`${formatCurrency(parseInt(qty * price))} VND`);
                     },
                     error: function(xhr, status, error) {
                         alert("Cập nhật giỏ hàng không thành công");
@@ -150,6 +151,14 @@
 
                 });
             }
+
+            function formatCurrency(inputValue) {
+                let inputStr = String(inputValue);
+                let parts = inputStr.split('.');
+                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                return parts.join('.');
+            }
+
         });
     </script>
 @endpush

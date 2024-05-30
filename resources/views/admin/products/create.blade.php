@@ -32,7 +32,7 @@
                         <label for="inputCategory" class="col-form-label">Category</label>
                         <select name="category" class="form-control">
                             <option value="" selected disabled>Select Category</option>
-                            @foreach($categories as $category)
+                            @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
@@ -45,7 +45,7 @@
                         <label for="inputBrand" class="col-form-label">Brand</label>
                         <select name="brand" class="form-control">
                             <option value="" selected disabled>Select Brand</option>
-                            @foreach($brands as $brand)
+                            @foreach ($brands as $brand)
                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                             @endforeach
                         </select>
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-4">
                         <label for="inputPrice4" class="col-form-label">Price</label>
                         <input type="number" class="form-control" id="inputPrice4" placeholder="Price" name="price"
                             value="{{ old('price') }}">
@@ -65,8 +65,16 @@
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputQuantitty4" class="col-form-label">Quantitty</label>
+                    <div class="form-group col-md-4">
+                        <label for="inputQuantitty4" class="col-form-label">Price sale</label>
+                        <input type="number" class="form-control" id="inputQuantitty4" placeholder="Quantitty"
+                            name="price_sale" value="{{ old('price_sale') }}">
+                        @error('price_sale')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputQuantitty4" class="col-form-label">Quantitty </label>
                         <input type="number" class="form-control" id="inputQuantitty4" placeholder="Quantitty"
                             name="quantity" value="{{ old('quantity') }}">
                         @error('quantity')
@@ -88,7 +96,7 @@
                         </p>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="description-vi">Description - VI</label>
                     <textarea name="description-vi" id="description-vi" class="summernote" rows="100"></textarea>

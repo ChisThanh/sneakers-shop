@@ -160,26 +160,13 @@
                         </div>
                     </li>
                 @endguest
-
-
-                {{-- <li class="out">
-                    <div class="chat-img">
-                        <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
-                    </div>
-                    <div class="chat-body">
-                        <div class="chat-message">
-                            <h5>User</h5>
-                            <p>Xin chào</p>
-                        </div>
-                    </div>
-                </li> --}}
-
             </ul>
         </div>
         <div class="card-footer text-muted">
             <form class="form-inline" id="form-chat">
                 <div class="form-group mx-sm-3 mb-2">
-                    <input type="text" class="form-control" id="message" placeholder="Enter message..">
+                    <input type="text" class="form-control" id="message" placeholder="Enter message.."
+                        autocomplete="off">
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Gửi</button>
             </form>

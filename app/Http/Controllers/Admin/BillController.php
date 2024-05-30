@@ -22,15 +22,13 @@ class BillController extends Controller
         $carts = Bill::query()->paginate(5);
 
         $carts->transform(function ($cart) {
-
             $cart->user_name = $cart->user->name;
 
-            if ($cart->status === 0) {
+            if ($cart->status === 1) {
                 $cart->status_array = [BillStatusEnum::getKey(BillStatusEnum::DESTROY)];
             } else {
                 $cart->status_array = BillStatusEnum::getKeys(range((int)$cart->status, BillStatusEnum::REVIEWS));
             }
-
             return $cart;
         });
 
@@ -58,16 +56,13 @@ class BillController extends Controller
         return view('admin.carts.create');
     }
 
-
-
-
     public function update(Request $request, string $id)
     {
         $cart = Bill::query()->find($id);
-
         $cart->update([
             'status' => BillStatusEnum::getValue($request->status),
         ]);
+
         $cart->save();
 
         return $this->successResponse(message: 'Thành công');

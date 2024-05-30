@@ -27,32 +27,7 @@
                 </div>
             </li>
 
-            <li class="dropdown notification-list topbar-dropdown d-none d-lg-block">
-                <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" id="topbar-languagedrop"
-                    href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ asset('assets_admin/images/flags/us.jpg') }}" alt="user-image" class="mr-1"
-                        height="12"> <span class="align-middle">English</span> <i class="mdi mdi-chevron-down"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated topbar-dropdown-menu"
-                    aria-labelledby="topbar-languagedrop">
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <img src="{{ asset('assets_admin/images/flags/germany.jpg') }}" alt="user-image" class="mr-1"
-                            height="12">
-                        <span class="align-middle">German</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <img src="{{ asset('assets_admin/images/flags/italy.jpg') }}" alt="user-image" class="mr-1"
-                            height="12">
-                        <span class="align-middle">Italian</span>
-                    </a>
-
-
-                </div>
-            </li>
 
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#"
@@ -129,8 +104,8 @@
             </li>
 
             <li class="dropdown notification-list">
-                <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown"
-                    id="topbar-userdrop" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" id="topbar-userdrop"
+                    href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <span class="account-user-avatar">
                         <img src="{{ asset('assets_admin/images/users/avatar-1.jpg') }}" alt="user-image"
                             class="rounded-circle">
@@ -147,31 +122,11 @@
                     <div class=" dropdown-header noti-title">
                         <h6 class="text-overflow m-0">Welcome !</h6>
                     </div>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-account-circle mr-1"></i>
-                        <span>My Account</span>
-                    </a>
-
                     <!-- item-->
                     <a href="{{ route('admin.setting.index') }}" class="dropdown-item notify-item">
                         <i class="mdi mdi-account-edit mr-1"></i>
                         <span>Settings</span>
                     </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-lifebuoy mr-1"></i>
-                        <span>Support</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-lock-outline mr-1"></i>
-                        <span>Lock Screen</span>
-                    </a>
-
                     <!-- item-->
                     <a href="{{ route('logout') }}" class="dropdown-item notify-item">
                         <i class="mdi mdi-logout mr-1"></i>

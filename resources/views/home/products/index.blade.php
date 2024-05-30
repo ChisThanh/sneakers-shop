@@ -89,8 +89,8 @@
                                     <div class="product-details">
                                         <h6>{{ $item->name }}</h6>
                                         <div class="price">
-                                            <h6>{{ $item->price_sale }}</h6>
-                                            <h6 class="l-through">{{ $item->price }}</h6>
+                                            <h6>{{ $item->price_sale }} VND</h6>
+                                            <h6 class="l-through">{{ $item->price }} VND</h6>
                                         </div>
                                         <div class="prd-bottom">
                                             <a href="#" class="social-info add-to-cart-all"

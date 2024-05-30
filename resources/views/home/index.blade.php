@@ -208,8 +208,8 @@
                                 <div class="product-details">
                                     <h6>{{ $item->name }}</h6>
                                     <div class="price">
-                                        <h6>{{ $item->price_sale }}</h6>
-                                        <h6 class="l-through">{{ $item->price }}</h6>
+                                        <h6>{{ formatCurrency($item->price_sale) }} VND</h6>
+                                        <h6 class="l-through">{{ formatCurrency($item->price) }} VND</h6>
                                     </div>
                                     <div class="prd-bottom">
                                         <a href="#" class="social-info add-to-cart-all"
@@ -264,8 +264,8 @@
                                 <div class="product-details">
                                     <h6>{{ $item->name }}</h6>
                                     <div class="price">
-                                        <h6>{{ $item->price_sale }}</h6>
-                                        <h6 class="l-through">{{ $item->price }}</h6>
+                                        <h6>{{ formatCurrency($item->price_sale) }} VND</h6>
+                                        <h6 class="l-through">{{ formatCurrency($item->price) }} VND</h6>
                                     </div>
                                     <div class="prd-bottom">
                                         <a href="#" class="social-info add-to-cart-all"
@@ -339,8 +339,8 @@
                                 </a>
                                 <div class="product-details">
                                     <div class="price">
-                                        <h6>{{ $item->price_sale }}</h6>
-                                        <h6 class="l-through">{{ $item->price }}</h6>
+                                        <h6>{{ formatCurrency($item->price_sale) }} VND</h6>
+                                        <h6 class="l-through">{{ formatCurrency($item->price) }} VND</h6>
                                     </div>
                                     <h4>{{ $item->name }}</h4>
                                     <div class="add-bag d-flex align-items-center justify-content-center">

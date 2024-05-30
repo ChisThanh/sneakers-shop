@@ -50,3 +50,13 @@ if (!function_exists('checkPayment')) {
         return $check;
     }
 }
+
+if (!function_exists('formatCurrency')) {
+    function formatCurrency($n)
+    {
+        $inputStr = strval($n);
+        $parts = explode('.', $inputStr);
+        $parts[0] = number_format($parts[0]);
+        return implode('.', $parts);
+    }
+}

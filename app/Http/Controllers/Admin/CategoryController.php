@@ -11,7 +11,6 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-
     use ResponseTrait;
 
     public function index()
@@ -51,9 +50,12 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $category = Category::query()->findOrFail($id);
-        return view('admin.categories.edit', [
-            'category' => $category
-        ]);
+        return view(
+            'admin.categories.edit',
+            [
+                'category' => $category
+            ]
+        );
     }
 
     public function update(UpdateRequest $request, string $id)

@@ -20,7 +20,7 @@
                 <div class="col-lg-5 offset-lg-1">
                     <div class="s_product_text">
                         <h3>{{ $product->name }}</h3>
-                        <h2>{{ $product->price_sale }}</h2>
+                        <h2>{{ $product->price_sale }} VND</h2>
                         <ul class="list">
                             <li><a class="active" href="#"><span>Category</span> {{ $product->category->name }}</a>
                             </li>
@@ -164,18 +164,16 @@
                             </div>
                             <div class="review_list">
                                 @foreach ($productReviews as $each)
+                                    <hr>
                                     <div class="review_item">
                                         <div class="media">
-                                            <div class="d-flex">
-                                                <img src="img/product/review-1.png" alt="">
-                                            </div>
                                             <div class="media-body">
                                                 <h4>{{ $each->user->name }}</h4>
                                                 <div id="rateYo2_{{ $each->user->id }}"></div>
                                             </div>
                                         </div>
-                                        <p>{{ $each->comment }}</p>
-                                        <p>{{ $each->created_at->format('d/m/Y') }}</p>
+                                        <p>{{ $each->comment }} <br> {{ $each->created_at->format('d/m/Y') }}</p>
+                                        <hr>
                                     </div>
                                 @endforeach
                             </div>
