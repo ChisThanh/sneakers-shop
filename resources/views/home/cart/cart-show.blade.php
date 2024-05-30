@@ -53,27 +53,20 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <h5>{{ $item['price'] }}</h5>
+                                                <h5 class="price">{{ $item['price'] }}</h5>
                                             </td>
                                             <td>
                                                 <div class="product_count">
                                                     <div class="product_count">
-                                                        <form action="{{ route('cart.updateitem', $item['id']) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            <input type="number" name="quantity" min="1"
-                                                                value="{{ $item['quantity'] }}" title="Quantity:"
-                                                                class="input-text qty" data-id="{{ $item['id'] }}"
-                                                                id="quantity_{{ $item['id'] }}">
-                                                        </form>
+                                                        <input type="number" name="quantity" min="1"
+                                                            value="{{ $item['quantity'] }}" title="Quantity:"
+                                                            class="input-text qty inp-qty" data-id="{{ $item['id'] }}">
                                                     </div>
                                                 </div>
                                             </td>
+
                                             <td>
-                                                <button type="submit" class="btn">Update</button>
-                                            </td>
-                                            <td>
-                                                <h5>{{ $item['quantity'] * $item['price'] }}</h5>
+                                                <h5 class="total">{{ $item['quantity'] * $item['price'] }}</h5>
                                             </td>
                                             <td>
                                                 <h5> <a onclick="return confirm('Bạn có muốn xóa?')"
@@ -100,20 +93,6 @@
                                             <h5>{{ $cart->totalPrice }}</h5>
                                         </td>
                                     </tr>
-                                    {{-- <tr class="shipping_area">
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <h5>Shipping</h5>
-                                        </td>
-                                        <td>
-                                            <div class="shipping_box">
-                                                <ul class="list">
-                                                    <li><a href="#">Flat Rate: $50</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr> --}}
                                     <tr class="out_button_area">
                                         <td></td>
                                         <td></td>
@@ -137,40 +116,40 @@
     </div>
 
 
+@endsection
+@push('js')
     <script>
         $(document).ready(function() {
-            $(".update").on("click", function() {
-                let items = [];
 
-                $("table tbody tr").each(function() {
-                    let id = $(this).find("input").data("id");
-                    let quantity = $(this).find("input").val();
+            $(".input-text.qty").change(function(e) {
+                var $parent = $(this).closest('tr');
+                var price = $parent.find('.price').text();
 
-                    items.push({
-                        id: id,
-                        quantity: quantity
-                    });
-                });
+                var productId = $(this).data('id');
+                var qty = $(this).val();
 
-                let token = "{{ csrf_token() }}";
+                update(productId, qty, price, $parent.find('.total'));
 
-                $.ajax({
-                    url: "{{ route('cart.update') }}",
-                    method: "POST",
-                    data: {
-                        items: items,
-                        _token: token
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            alert("Cập nhật giỏ hàng thành công");
-
-                        }
-                    }
-                });
             });
+
+            function update(id, qty, price, el_total) {
+                $.ajax({
+                    type: "POST",
+                    url: "/cart/updateItem/" + id,
+                    data: {
+                        quantity: qty,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        el_total.text(`${(qty * price).toFixed(2)}`);
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Cập nhật giỏ hàng không thành công");
+                    }
+
+                });
+            }
         });
     </script>
-
-
-@endsection
+@endpush

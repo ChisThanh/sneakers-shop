@@ -78,8 +78,8 @@
                                             <h6 class="l-through">{{ $item->price }}</h6>
                                         </div>
                                         <div class="prd-bottom">
-
-                                            <a href="{{ route('cart.add', $item['id']) }}" class="social-info">
+                                            <a href="#" class="social-info add-to-cart-all"
+                                                data-id="{{ $item->id }}">
                                                 <span class="ti-bag"></span>
                                                 <p class="hover-text">add to bag</p>
                                             </a>

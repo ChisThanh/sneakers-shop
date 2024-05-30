@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('image');
             $table->integer('stock_quantity');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

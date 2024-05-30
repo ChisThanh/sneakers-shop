@@ -35,8 +35,8 @@ class ProductSeeder extends Seeder
         $name_img = ["p1.jpg", "p2.jpg", "p3.jpg", "p4.jpg", "p5.jpg", "p6.jpg", "p7.jpg", "p8.jpg"];
         for ($i = 1; $i <= 50; $i++) {
             $random_image = $name_img[array_rand($name_img)];
-            $price = $faker->randomFloat(2, 100, 1000);
-            $priceSale = $faker->randomFloat(2, 100, $price);
+            $price = $faker->numberBetween(100000, 1000000);
+            $priceSale = $faker->numberBetween(100000, $price);
 
             Product::create([
                 'name' => $faker->name,

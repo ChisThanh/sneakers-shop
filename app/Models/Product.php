@@ -26,6 +26,7 @@ class Product extends Model implements TranslatableContract
         'image',
         'stock_quantity'
     ];
+
     public function getUrlImgAttribute()
     {
         if (isset($this->image) && strpos($this->image, '/img/product') === 0) {
@@ -33,5 +34,10 @@ class Product extends Model implements TranslatableContract
         } else {
             return asset('images') . '/' . $this->image;
         }
+    }
+
+    public function category()
+    {
+        return $this->hasone(Category::class, 'id', 'category_id');
     }
 }

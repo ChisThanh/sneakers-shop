@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cart extends Model
+class Bill extends Model
 {
     use HasFactory;
 
@@ -17,7 +17,6 @@ class Cart extends Model
         'total',
         'payment_status',
         'payment_method',
-        'status'
     ];
 
     public function getUserNameAttribute()
@@ -43,7 +42,7 @@ class Cart extends Model
     public function getpaymentmethod()
     {
         return $this->payment_method;
-        }
+    }
 
     public function user()
     {
@@ -52,6 +51,6 @@ class Cart extends Model
 
     public function details()
     {
-        return $this->hasMany(CartDetail::class, 'cart_id');
+        return $this->hasMany(BillDetail::class, 'bill_id');
     }
 }

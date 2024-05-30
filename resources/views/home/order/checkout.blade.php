@@ -63,24 +63,10 @@
                                 <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
                                 <li><a href="#">Total <span>{{ $cart->totalPrice + 50 }}</span></a></li>
                             </ul>
-                            <div class="payment_item">
-                                <div class="radion_btn">
-                                    <input type="radio" id="f-option5" name="selector">
-                                    <label for="f-option5">Check payments</label>
-                                    <div class="check"></div>
-                                </div>
-                            </div>
-                            <div class="payment_item active">
-                                <div class="radion_btn">
-                                    <input type="radio" id="f-option6" name="selector">
-                                    <label for="f-option6">Paypal </label>
-                                    <img src="img/product/card.jpg" alt="">
-                                    <div class="check"></div>
-                                </div>
-                            </div>
+
+
                             <button type="submit" name="submit" id="btn-submit" class="btn primary-btn"
-                                onclick="document.querySelector('#form-checkout').submit()">Proceed to
-                                Paypal</button>
+                                onclick="document.querySelector('#form-checkout').submit()">Đặt hàng</button>
                         </div>
                     </div>
                 </div>

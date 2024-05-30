@@ -82,7 +82,7 @@
 
             function fetchData(page) {
                 $.ajax({
-                    url: "{{ route('api.cart.index') }}" + `?page=${page}`,
+                    url: "{{ route('api.bill.index') }}" + `?page=${page}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -122,10 +122,10 @@
                                 <a href="##" class="action-icon btn-detail" data-id='${v.id}'>
                                     <i class="mdi mdi-eye-outline"></i>
                                 </a>
-                                <a target="_blank" href="/cart/view-invoice-pdf/${v.id}" class="action-icon">
+                                <a target="_blank" href="/bill/view-invoice-pdf/${v.id}" class="action-icon">
                                     <i class="mdi mdi-pdf-box"></i>
                                 </a>
-                                <a href="/cart/down-invoice-pdf/${v.id}" class="action-icon">
+                                <a href="/bill/down-invoice-pdf/${v.id}" class="action-icon">
                                     <i class="mdi mdi-cloud-download"></i>
                                 </a>
 
@@ -195,7 +195,7 @@
                 var dataId = $(this).attr('data-id');
                 $.ajax({
                     type: "GET",
-                    url: `/api/cart/cart-detail/${dataId}`,
+                    url: `/api/bill/bill-detail/${dataId}`,
                     dataType: "json",
                     success: function(response) {
                         var data = response.data;
@@ -231,7 +231,7 @@
                 }).then(function(result) {
                     $.ajax({
                         type: "GET",
-                        url: `/admin/cart/edit/${dataId}`,
+                        url: `/admin/bill/edit/${dataId}`,
                         data: {
                             'status': selectedValue
                         },

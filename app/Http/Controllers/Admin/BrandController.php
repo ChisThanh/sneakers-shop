@@ -28,10 +28,12 @@ class BrandController extends Controller
         }
         return $brands;
     }
+
     public function create()
     {
         return view('admin.brands.create');
     }
+
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
@@ -41,9 +43,10 @@ class BrandController extends Controller
         }
 
         Brand::create(['name' => $data['name']]);
-        
+
         return $this->successResponse(message: 'Thành công!');
     }
+
     public function edit(string $id)
     {
         $brand = Brand::query()->findOrFail($id);
@@ -51,6 +54,7 @@ class BrandController extends Controller
             'brand' => $brand
         ]);
     }
+
     public function update(UpdateRequest $request, string $id)
     {
         $data = $request->validated();
@@ -63,24 +67,22 @@ class BrandController extends Controller
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             return redirect()->back()->withErrors(['msg' => 'Thương hiệu không tồn tại']);
         }
-        
+
         $brand->fill(['name' => $data['name']]);
         $brand->save();
 
         return $this->successResponse(message: 'Thành công!');
     }
 
-    //đang bị lỗi không hiển thị sản phẩm vì lỗi phần soft delete chưa tạo migration
     public function destroy(string $id)
     {
         try {
-                Brand::query()->findOrFail($id);
-                Brand::destroy($id);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+            Brand::query()->findOrFail($id);
+            Brand::destroy($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             return $this->errorResponse("Không thành công!");
         }
-        
+
         return $this->successResponse('', 'Thành công');
     }
-
 }

@@ -1,18 +1,16 @@
 <?php
 
-use App\Http\Controllers\Admin\CartController;
+use App\Http\Controllers\Admin\BillController;
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 // Route::middleware(['admin', 'auth'])->prefix('admin')->name('admin.')->group(function () {
 Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::get('/chat', [ChatController::class, 'index'])->name('chat');
 
     // route product
@@ -27,8 +25,8 @@ Route::middleware('web')->prefix('admin')->name('admin.')->group(function () {
 
     // route cart
     Route::group(['prefix' => 'cart', 'as' => 'cart.'], function () {
-        Route::get('/', [CartController::class, 'index'])->name('index');
-        Route::get('/edit/{id}', [CartController::class, 'update'])->name('edit');
+        Route::get('/', [BillController::class, 'index'])->name('index');
+        Route::get('/edit/{id}', [BillController::class, 'update'])->name('edit');
     });
 
     //route brand

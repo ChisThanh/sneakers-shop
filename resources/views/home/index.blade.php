@@ -212,7 +212,8 @@
                                         <h6 class="l-through">{{ $item->price }}</h6>
                                     </div>
                                     <div class="prd-bottom">
-                                        <a href="{{ route('cart.add', $item['id']) }}" class="social-info">
+                                        <a href="#" class="social-info add-to-cart-all"
+                                            data-id="{{ $item->id }}">
                                             <span class="ti-bag"></span>
                                             <p class="hover-text">add to bag</p>
                                         </a>
@@ -266,7 +267,8 @@
                                         <h6 class="l-through">{{ $item->price }}</h6>
                                     </div>
                                     <div class="prd-bottom">
-                                        <a href="{{ route('cart.add', $item['id']) }}" class="social-info">
+                                        <a href="#" class="social-info add-to-cart-all"
+                                            data-id="{{ $item->id }}">
                                             <span class="ti-bag"></span>
                                             <p class="hover-text">add to bag</p>
                                         </a>
@@ -340,8 +342,8 @@
                                     </div>
                                     <h4>{{ $item->name }}</h4>
                                     <div class="add-bag d-flex align-items-center justify-content-center">
-                                        <a class="add-btn" href="{{ route('cart.add', $item['id']) }}"><span
-                                                class="ti-bag"></span></a>
+                                        <a class="add-btn add-to-cart-all" href="#"
+                                            data-id="{{ $item->id }}"><span class="ti-bag"></span></a>
                                         <span class="add-text text-uppercase">Add to Bag</span>
                                     </div>
                                 </div>

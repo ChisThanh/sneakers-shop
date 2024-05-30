@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CartDetail extends Model
+class BillDetail extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
     protected $fillable = [
-        'cart_id',
+        'bill_id',
         'product_id',
         'quantity',
         'price',
@@ -25,6 +25,4 @@ class CartDetail extends Model
     {
         return $this->product->name;
     }
-
-
 }

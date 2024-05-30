@@ -45,7 +45,7 @@
                             <!-- users -->
                             <div class="row">
                                 <div class="col">
-                                    <div data-simplebar style="max-height: 550px">
+                                    {{-- <div data-simplebar style="max-height: 550px">
                                         <a href="javascript:void(0);" class="text-body">
                                             <div class="media bg-light mt-1 p-2">
                                                 <img src="{{ asset('assets_admin/images/users/avatar-2.jpg') }}"
@@ -65,7 +65,7 @@
                                                 </div>
                                             </div>
                                         </a>
-                                    </div> <!-- end slimscroll-->
+                                    </div> <!-- end slimscroll--> --}}
                                     @foreach ($users as $user)
                                         <div data-simplebar style="max-height: 550px">
                                             <a href="javascript:void(0);" class="text-body user-chat"
@@ -112,15 +112,12 @@
                     <div class="row">
                         <div class="col">
                             <div class="mt-2 bg-light p-3 rounded">
-                                <form class="needs-validation" novalidate="" name="chat-form" id="form-chat"
-                                    data-id="-1">
+                                <form class="needs-validation" name="chat-form" id="form-chat" data-id="-1">
                                     <div class="row">
                                         <div class="col mb-2 mb-sm-0">
                                             <input type="text" class="form-control border-0" placeholder="Enter message"
-                                                required="" id="message">
-                                            <div class="invalid-feedback">
-                                                Please enter your messsage
-                                            </div>
+                                                id="message">
+
                                         </div>
                                         <div class="col-sm-auto">
                                             <div class="btn-group">
@@ -279,6 +276,7 @@
                     mainBox.append(`<li class="clearfix odd"><div class="chat-avatar"><img src="{{ asset('assets_admin/images/users/avatar-1.jpg') }}" class="rounded"alt="dominic" /><i>10:01</i></div><div class="conversation-text"><div class="ctext-wrap"><i>Admin</i><p>${mgs}</p></div></div></li>
                     `);
                 });
+                $("#form-chat #message").val("")
             });
         </script>
     @endauth

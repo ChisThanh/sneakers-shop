@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bill;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class PDFController extends Controller
 {
     public function viewPdfInvoice(string $id)
     {
-        $data = Cart::with(['details', 'user'])
+        $data = Bill::with(['details', 'user'])
             ->find($id);
 
         // dd($data);
@@ -28,7 +29,7 @@ class PDFController extends Controller
 
     public function downloadPdfInvoice(string $id)
     {
-        $data = Cart::with('details')
+        $data = Bill::with('details')
             ->find($id);
 
 

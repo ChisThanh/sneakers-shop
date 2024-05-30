@@ -1,7 +1,7 @@
 @extends('home.layouts.master')
 @section('content')
     <!--================Single Product Area =================-->
-    <div class="product_image_area">
+    <div class="product_image_area my-3">
         <div class="container">
             <div class="row s_product_inner">
                 <div class="col-lg-6">
@@ -22,26 +22,24 @@
                         <h3>{{ $product->name }}</h3>
                         <h2>{{ $product->price_sale }}</h2>
                         <ul class="list">
-                            <li><a class="active" href="#"><span>Category</span> {{ $category->name }}</a></li>
-                            <li><a href="#"><span>Availibility</span> : In Stock</a></li>
+                            <li><a class="active" href="#"><span>Category</span> {{ $product->category->name }}</a>
+                            </li>
+                            <li><span>Availibility</span> : In Stock</li>
                         </ul>
-                        @foreach ($product_tran as $tran)
-                            <p>{{ $tran->description }}</p>
-                        @endforeach
+                        <div class="my-2">
+                            {{ $product->description }}
+                        </div>
 
-                        <form action="{{ route('cart.add', $product->id) }}" method="get">
-                            @csrf
-                            <div class="product_count">
-                                <label for="qty">Quantity:</label>
-                                <input type="number" name="quantity" min="1" value="1" title="Quantity:"
-                                    class="input-text qty" oninput="validateInput(this)">
-                            </div>
-                            <div class="card_area d-flex align-items-center">
-                                <button type="submit" class="btn primary-btn">Add to Cart</button>
-                                {{-- <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
-                                <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a> --}}
-                            </div>
-                        </form>
+                        <div class="product_count">
+                            <label for="qty">Quantity:</label>
+                            <input type="number" name="quantity" min="1" value="1" title="Quantity:"
+                                class="input-text qty" id="qty">
+                        </div>
+                        <div class="card_area d-flex align-items-center">
+                            <button type="submit" class="btn primary-btn add-to-cart-detail"
+                                data-id="{{ $product->id }}">Add to Cart</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -69,9 +67,7 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    @foreach ($product_tran as $tran)
-                        <p>{{ $tran->description }}</p>
-                    @endforeach
+                    {{ $product->description }}
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive">
@@ -167,50 +163,52 @@
                                 </div>
                             </div>
                             <div class="review_list">
-                                @foreach ($comments as $com)
+                                @foreach ($productReviews as $each)
                                     <div class="review_item">
                                         <div class="media">
                                             <div class="d-flex">
                                                 <img src="img/product/review-1.png" alt="">
                                             </div>
                                             <div class="media-body">
-                                                <h4>{{ $com->user->name }}</h4>
-
-                                                <div id="rateYo2_{{ $com->user->id }}"></div>
+                                                <h4>{{ $each->user->name }}</h4>
+                                                <div id="rateYo2_{{ $each->user->id }}"></div>
                                             </div>
                                         </div>
-                                        <p>{{ $com->comment }}</p>
-                                        <p>{{ $com->created_at->format('d/m/Y') }}</p>
+                                        <p>{{ $each->comment }}</p>
+                                        <p>{{ $each->created_at->format('d/m/Y') }}</p>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                         <div class="col-lg-6">
                             @if (auth()->check())
-                                <div class="review_box">
-                                    <h4>Add a Review</h4>
-                                    <p>Your Rating:</p>
-                                    <form class="row contact_form" action="{{ route('post.commnet', $product->id) }}"
-                                        method="post" id="contactForm" novalidate="novalidate">
-                                        @csrf
-                                        <ul class="list">
-                                            <div id="rateYo1"></div>
-                                            <div class="form-group">
-                                                <input type="hidden" name="rating" id="rating_input">
+                                @if (checkCmt($product->id, auth()->user()->id))
+                                    <div class="review_box">
+                                        <h4>Add a Review</h4>
+                                        <p>Your Rating:</p>
+                                        <form class="row contact_form" action="{{ route('post.commnet', $product->id) }}"
+                                            method="post" id="contactForm" novalidate="novalidate">
+                                            @csrf
+                                            <ul class="list">
+                                                <div id="rateYo1"></div>
+                                                <div class="form-group">
+                                                    <input type="hidden" name="rating" id="rating_input">
+                                                </div>
+                                            </ul>
+                                            <p>Outstanding</p>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" name="comment" id="message" rows="1" placeholder="Review"
+                                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
+                                                </div>
                                             </div>
-                                        </ul>
-                                        <p>Outstanding</p>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <textarea class="form-control" name="comment" id="message" rows="1" placeholder="Review"
-                                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Review'"></textarea></textarea>
+                                            <div class="col-md-12 text-right">
+                                                <button type="submit" value="submit" class="primary-btn">Submit
+                                                    Now</button>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12 text-right">
-                                            <button type="submit" value="submit" class="primary-btn">Submit Now</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                        </form>
+                                    </div>
+                                @endif
                             @else
                                 <div class="alert alert-danger">
                                     <strong>Please Login!</strong> Click here -> <a href="{{ route('login') }}">Login</a>
@@ -226,6 +224,28 @@
 
 
     <script>
+        $(document).ready(function() {
+            $(".add-to-cart-detail").click(function(e) {
+                e.preventDefault();
+                let idP = $(this).attr("data-id");
+                let qty = $("#qty").val();
+                $.ajax({
+                    type: "GET",
+                    url: "/cart/add/" + idP,
+                    data: {
+                        'quantity': qty
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        alert("Thêm vào giỏ hàng thành công");
+                    },
+                    error: function(response) {
+                        alert("Thêm vào giỏ hàng không thành công");
+                    }
+                });
+            });
+        });
+
         $(function() {
             let ratingAvg = '{{ $ratingAvg ?? 0 }}';
             let rating_users = @json($rating_user);

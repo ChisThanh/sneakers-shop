@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponseTrait;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ShoppingCart;
@@ -10,15 +11,22 @@ use Illuminate\Http\Request;
 
 class ShoppingCartController extends Controller
 {
-    public function addToCart(Product $product, ShoppingCart $cart)
+    use ResponseTrait;
+
+    public function addToCart($id, ShoppingCart $cart)
     {
+        $product = Product::find($id);
+        if (!$product) {
+            return back()->withErrors("lõi");
+        }
+
         $quantity = request('quantity', 1);
         $quantity = $quantity > 0 ? floor($quantity) : 1;
         $cart->addCart($product, $quantity);
 
-        return redirect()->back();
+        return $this->successResponse('', 'Thành congg');
     }
-    
+
     public function show(ShoppingCart $cart)
     {
         return view('home.cart.cart-show', compact('cart'));
@@ -27,7 +35,7 @@ class ShoppingCartController extends Controller
     public function deleteCart($id, ShoppingCart $cart)
     {
         $cart->deleteCart($id);
-        return redirect()->route('cart-show');
+        return redirect()->back();
     }
 
     public function updateCart(Request $request)
@@ -41,7 +49,7 @@ class ShoppingCartController extends Controller
             $cart->updateCart($id, $quantity);
         }
 
-        return redirect()->route('cart-show');
+        return redirect()->back();
     }
     public function updateCartItem($id, Request $request, ShoppingCart $cart)
     {
@@ -49,11 +57,12 @@ class ShoppingCartController extends Controller
         $quantity = max(1, (int)$quantity);
         $cart->updateCart($id, $quantity);
 
-        return redirect()->route('cart-show');
+        return $this->successResponse('', 'Thành công');;
     }
-    public function clearCart(ShoppingCart $cart)
+    public function clearCart()
     {
+        $cart = new ShoppingCart();
         $cart->clearCart();
-        return redirect()->route('cart-show');
+        return redirect()->back();
     }
 }

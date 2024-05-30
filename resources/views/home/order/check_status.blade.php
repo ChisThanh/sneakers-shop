@@ -22,7 +22,7 @@
                         <h4>Order Info</h4>
                         <ul class="list">
                             <li><a href="#"><span>Order number</span> {{ $user->phone }}</a></li>
-                            <li><a href="#"><span>Date</span> {{ $user->address }}</a></li>
+                            <li><a href="#"><span>Address</span> {{ $user->address }}</a></li>
                             <li><a href="#"><span>Total</span> {{ $order->total }}</a></li>
                             <li>
                                 <a href="#">
@@ -38,7 +38,17 @@
                                     @endif
                                 </a>
                             </li>
-
+                            @if (!checkPayment($order->id))
+                                <li>
+                                    <form action="{{ route('vnpayment') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="redirect">
+                                        <input type="hidden" name="id_order" value="{{ $order->id }}">
+                                        <input type="hidden" name="total_order" value="{{ $order->total }}">
+                                        <button class="btn btn-primary">Thanh toán bằng VNPAY</button>
+                                    </form>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -55,7 +65,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($cart1 as $item)
+                            @foreach ($order->details as $item)
                                 <tr>
                                     <td>
                                         <p>{{ $item['name'] }}</p>

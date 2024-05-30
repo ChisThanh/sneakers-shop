@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BillController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -30,11 +31,11 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'cart',
-    'as' => 'cart.'
+    'prefix' => 'bill',
+    'as' => 'bill.'
 ], function () {
-    Route::get('/', [CartController::class, 'getPaginate'])->name('index');
-    Route::get('/cart-detail/{id}', [CartController::class, 'getCartDetail'])->name('getCartDetail');
+    Route::get('/', [BillController::class, 'getPaginate'])->name('index');
+    Route::get('/bill-detail/{id}', [BillController::class, 'getCartDetail'])->name('getCartDetail');
 });
 
 

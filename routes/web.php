@@ -2,19 +2,13 @@
 
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Home\CategoryController;
-use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\OrderController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\Home\ProductController;
-use App\Http\Controllers\Home\ShoppingCart;
 use App\Http\Controllers\Home\ShoppingCartController;
 use App\Http\Controllers\SocialiteController;
-use App\Mail\CustomMail;
-use App\Models\Cart;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 // Home
@@ -43,9 +37,11 @@ Route::post('/chat/broadcast/{senderId}', [ChatController::class, 'broadcast'])-
 include __DIR__ . '/admin.php';
 
 
-Route::get('cart/view-invoice-pdf/{id}', [PDFController::class, 'viewPdfInvoice']);
-Route::get('cart/down-invoice-pdf/{id}', [PDFController::class, 'downloadPdfInvoice']);
+Route::get('bill/view-invoice-pdf/{id}', [PDFController::class, 'viewPdfInvoice']);
+Route::get('bill/down-invoice-pdf/{id}', [PDFController::class, 'downloadPdfInvoice']);
 
+
+Route::post('/vnpayment', [OrderController::class, "vnpayment"])->name("vnpayment");
 
 Route::post('/vnpay-payment', function () {
     $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
@@ -60,30 +56,7 @@ Route::post('/vnpay-payment', function () {
     $vnp_Locale = 'vn';
     $vnp_BankCode = 'NCB';
     $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-    //Add Params of 2.0.1 Version
-    // $vnp_ExpireDate = $_POST['txtexpire'];
 
-    //Billing
-    // $vnp_Bill_Mobile = $_POST['txt_billing_mobile'];
-    // $vnp_Bill_Email = $_POST['txt_billing_email'];
-    // $fullName = trim($_POST['txt_billing_fullname']);
-    // if (isset($fullName) && trim($fullName) != '') {
-    //     $name = explode(' ', $fullName);
-    //     $vnp_Bill_FirstName = array_shift($name);
-    //     $vnp_Bill_LastName = array_pop($name);
-    // }
-    // $vnp_Bill_Address=$_POST['txt_inv_addr1'];
-    // $vnp_Bill_City=$_POST['txt_bill_city'];
-    // $vnp_Bill_Country=$_POST['txt_bill_country'];
-    // $vnp_Bill_State=$_POST['txt_bill_state'];
-    // // Invoice
-    // $vnp_Inv_Phone=$_POST['txt_inv_mobile'];
-    // $vnp_Inv_Email=$_POST['txt_inv_email'];
-    // $vnp_Inv_Customer=$_POST['txt_inv_customer'];
-    // $vnp_Inv_Address=$_POST['txt_inv_addr1'];
-    // $vnp_Inv_Company=$_POST['txt_inv_company'];
-    // $vnp_Inv_Taxcode=$_POST['txt_inv_taxcode'];
-    // $vnp_Inv_Type=$_POST['cbo_inv_type'];
     $inputData = array(
         "vnp_Version" => "2.1.0",
         "vnp_TmnCode" => $vnp_TmnCode,
@@ -97,22 +70,6 @@ Route::post('/vnpay-payment', function () {
         "vnp_OrderType" => $vnp_OrderType,
         "vnp_ReturnUrl" => $vnp_Returnurl,
         "vnp_TxnRef" => $vnp_TxnRef,
-        // "vnp_ExpireDate"=>$vnp_ExpireDate,
-        // "vnp_Bill_Mobile"=>$vnp_Bill_Mobile,
-        // "vnp_Bill_Email"=>$vnp_Bill_Email,
-        // "vnp_Bill_FirstName"=>$vnp_Bill_FirstName,
-        // "vnp_Bill_LastName"=>$vnp_Bill_LastName,
-        // "vnp_Bill_Address"=>$vnp_Bill_Address,
-        // "vnp_Bill_City"=>$vnp_Bill_City,
-        // "vnp_Bill_Country"=>$vnp_Bill_Country,
-        // "vnp_Inv_Phone"=>$vnp_Inv_Phone,
-        // "vnp_Inv_Email"=>$vnp_Inv_Email,
-        // "vnp_Inv_Customer"=>$vnp_Inv_Customer,
-        // "vnp_Inv_Address"=>$vnp_Inv_Address,
-        // "vnp_Inv_Company"=>$vnp_Inv_Company,
-        // "vnp_Inv_Taxcode"=>$vnp_Inv_Taxcode,
-        // "vnp_Inv_Type"=>$vnp_Inv_Type
-
     );
 
     if (isset($vnp_BankCode) && $vnp_BankCode != "") {
@@ -122,7 +79,6 @@ Route::post('/vnpay-payment', function () {
         $inputData['vnp_Bill_State'] = $vnp_Bill_State;
     }
 
-    //var_dump($inputData);
     ksort($inputData);
     $query = "";
     $i = 0;
@@ -160,7 +116,7 @@ Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
 });
 
 
-Route::get('/detail/{id}', [ProductController::class, 'detailpro'])->name('detailpro');
+Route::get('/detail/{id}', [ProductController::class, 'detailProduct'])->name('detailpro');
 
 //commennt
 Route::post('/comment/{product_id}', [ProductController::class, 'post_commnet'])->name('post.commnet');

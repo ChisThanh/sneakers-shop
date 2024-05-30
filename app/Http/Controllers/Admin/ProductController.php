@@ -50,7 +50,7 @@ class ProductController extends Controller
         Product::create([
             'price' =>  $data['price'],
             'category_id' => $data['category'],
-            'brand_id' => $data['brand'], 
+            'brand_id' => $data['brand'],
             'stock_quantity' => $data['quantity'],
             'image' =>  $imagePath,
             'name' => $data['name'],
@@ -62,7 +62,7 @@ class ProductController extends Controller
                 'description' => $data['description-en'],
             ]
         ]);
-        
+
         return $this->successResponse(message: 'Thành công!');
     }
 
@@ -93,7 +93,7 @@ class ProductController extends Controller
             $imagePath = $request->file('image')->storeAs('/products', $newFileName, ['disk' => 'public']);
             $image->move(public_path('images/products'), $newFileName);
         }
-        
+
         $product->fill([
             'price' =>  $data['price'],
             'stock_quantity' => $data['quantity'],
@@ -113,12 +113,12 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         try {
-                $product = Product::query()->findOrFail($id);
-                Product::destroy($id);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception){
+            $product = Product::query()->findOrFail($id);
+            Product::destroy($id);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $exception) {
             return $this->errorResponse("Không thành công!");
         }
-        
+
         return $this->successResponse('', 'Thành công');
     }
 

@@ -277,6 +277,7 @@
 
                 $('.chat-list').append(newLi);
             });
+            $("#form-chat #message").val("")
         });
     </script>
 @endauth
@@ -339,6 +340,23 @@
             var regex = /^[^.]+\.[^.]+$/;
             return regex.test(fileName);
         }
+
+        $(".add-to-cart-all").click(function(e) {
+            e.preventDefault();
+            let idP = $(this).attr("data-id");
+            $.ajax({
+                type: "GET",
+                url: "/cart/add/" + idP,
+                dataType: "json",
+                success: function(response) {
+                    alert("Thêm vào giỏ hàng thành công");
+                },
+                error: function(response) {
+                    alert("Thêm vào giỏ hàng không thành công");
+                }
+            });
+        });
+
     });
 </script>
 

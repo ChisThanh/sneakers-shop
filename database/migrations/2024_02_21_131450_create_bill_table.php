@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->date('delivery_date')->default(today());
@@ -16,13 +16,12 @@ return new class extends Migration
             $table->integer('payment_status')->default(0);
             $table->integer('payment_method')->default(0);
             $table->integer('status')->default(0);
-
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('bills');
     }
 };

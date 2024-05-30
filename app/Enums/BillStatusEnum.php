@@ -7,7 +7,7 @@ namespace App\Enums;
 use BenSampo\Enum\Enum;
 
 
-final class CartStatusEnum extends Enum
+final class BillStatusEnum extends Enum
 {
     public const  ORDER = 0;
     public const  DESTROY = 1;

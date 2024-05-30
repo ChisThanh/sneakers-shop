@@ -107,22 +107,20 @@ class ProductController extends Controller
     }
 
 
-    public function detailpro($id)
+    public function detailProduct($id)
     {
         $product = Product::where("id", $id)->first();
         $product->image = $product->url_img;
 
-        $category = Category::where("id", $product->category_id)->first();
-        $product_tran = ProductTranslation::where("product_id", $id)->get();
+        $productReviews = ProductReview::where('product_id', $id)->get();
 
-        $comments = ProductReview::where('product_id', $id)->orderBy('id', 'DESC')->get();
-        $size = Size::where('product_id', $id)->get();
-        $ratingAvg = ProductReview::where('product_id', $id)->avg('rating');
+        $ratingAvg = $productReviews->avg('rating');
 
-        $rating_user = ProductReview::where('product_id', $id)->pluck('rating', 'user_id');
-        $numberOfReviews = ProductReview::where('product_id', $id)->count();
+        $rating_user = $productReviews->pluck('rating', 'user_id');
 
-        return view("home.products.detail", compact('product', 'category', 'product_tran', 'size', 'comments', 'ratingAvg', 'rating_user', 'numberOfReviews'));
+        $numberOfReviews = $productReviews->count();
+
+        return view("home.products.detail", compact('product',  'productReviews', 'ratingAvg', 'rating_user', 'numberOfReviews'));
     }
 
     public function post_commnet($proid)
@@ -135,16 +133,25 @@ class ProductController extends Controller
         $data['product_id'] = $proid;
         $data['user_id'] = auth()->id();
 
-        // Tìm đánh giá của sản phẩm này từ người dùng
-        $model = ProductReview::where([
-            'product_id' => $proid,
-            'user_id' => auth()->id()
-        ])->first();
+        $review = ProductReview::where('product_id', $data['product_id'])
+            ->where('user_id', $data['user_id'])
+            ->first();
 
-        if ($model)
-            $model->update($data);
-        else
-            ProductReview::create($data);
+        if ($review) {
+            $review->update([
+                "quantity_limit" => $review->quantity_limit += 1,
+                "comment" => $data['comment'],
+                "rating" => $data['rating'],
+            ]);
+        } else {
+            $review = ProductReview::Create([
+                "product_id" => $data['product_id'],
+                "user_id" => $data['user_id'],
+                "quantity_limit" => 0,
+                "comment" => $data['comment'],
+                "rating" => $data['rating'],
+            ]);
+        }
 
         return redirect()->back();
     }
