@@ -150,6 +150,7 @@
                     }
                     return str;
                 }
+
                 $.ajax({
                     type: "GET",
                     url: "{{ route('admin.getChartCategories') }}",
