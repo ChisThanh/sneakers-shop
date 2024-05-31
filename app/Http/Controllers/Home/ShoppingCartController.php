@@ -65,4 +65,12 @@ class ShoppingCartController extends Controller
         $cart->clearCart();
         return redirect()->back();
     }
+
+    public function quantityCart()
+    {
+        $card = new ShoppingCart();
+        return response()->json([
+            "quantity" => $card->totalQuantity
+        ]);
+    }
 }

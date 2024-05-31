@@ -20,7 +20,7 @@
                 <div class="col-lg-5 offset-lg-1">
                     <div class="s_product_text">
                         <h3>{{ $product->name }}</h3>
-                        <h2>{{ $product->price_sale }} VND</h2>
+                        <h2>{{ formatCurrency($product->price_sale) }}</h2>
                         <ul class="list">
                             <li><a class="active" href="#"><span>Category</span> {{ $product->category->name }}</a>
                             </li>
@@ -236,6 +236,7 @@
                     dataType: "json",
                     success: function(response) {
                         alert("Thêm vào giỏ hàng thành công");
+                        updateQuantityCart();
                     },
                     error: function(response) {
                         alert("Thêm vào giỏ hàng không thành công");

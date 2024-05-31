@@ -16,14 +16,11 @@
   CSS
   ============================================= -->
     <link rel="stylesheet" href="{{ asset('assets_home/css/linearicons.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets_home/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/nouislider.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets_home/css/ion.rangeSlider.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets_home/css/ion.rangeSlider.skinFlat.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets_home/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/style.css') }}">
@@ -337,6 +334,7 @@
                 dataType: "json",
                 success: function(response) {
                     alert("Thêm vào giỏ hàng thành công");
+                    updateQuantityCart();
                 },
                 error: function(response) {
                     alert("Thêm vào giỏ hàng không thành công");
@@ -344,7 +342,20 @@
             });
         });
 
+
+
     });
+
+    function updateQuantityCart() {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('cart.quantityCart') }}",
+            dataType: "json",
+            success: function(response) {
+                $("#total-quantity-header").text(response.quantity);
+            }
+        });
+    }
 </script>
 
 @stack('js')

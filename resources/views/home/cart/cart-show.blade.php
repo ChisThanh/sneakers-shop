@@ -53,7 +53,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <h5 class="price">{{ formatCurrency($item['price']) }} VND</h5>
+                                                <h5 class="price">{{ formatCurrency($item['price']) }}</h5>
                                             </td>
                                             <td>
                                                 <div class="product_count">
@@ -67,7 +67,7 @@
 
                                             <td>
                                                 <h5 class="total">{{ formatCurrency($item['quantity'] * $item['price']) }}
-                                                    VND</h5>
+                                                </h5>
                                             </td>
                                             <td>
                                                 <h5> <a onclick="return confirm('Bạn có muốn xóa?')"
@@ -91,7 +91,7 @@
                                             <h5>Subtotal</h5>
                                         </td>
                                         <td>
-                                            <h5>{{ formatCurrency($cart->totalPrice) }} VND</h5>
+                                            <h5>{{ formatCurrency($cart->totalPrice) }}</h5>
                                         </td>
                                     </tr>
                                     <tr class="out_button_area">
@@ -144,6 +144,7 @@
                     dataType: "json",
                     success: function(response) {
                         el_total.text(`${formatCurrency(parseInt(qty * price))} VND`);
+                        updateQuantityCart();
                     },
                     error: function(xhr, status, error) {
                         alert("Cập nhật giỏ hàng không thành công");

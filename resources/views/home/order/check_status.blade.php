@@ -23,7 +23,7 @@
                         <ul class="list">
                             <li><a href="#"><span>Order number</span> {{ $user->phone }}</a></li>
                             <li><a href="#"><span>Address</span> {{ $user->address }}</a></li>
-                            <li><a href="#"><span>Total</span> {{ $order->total }}</a></li>
+                            <li><a href="#"><span>Total</span> {{ formatCurrency($order->total) }}</a></li>
                             <li>
                                 <a href="#">
                                     <span>Payment status</span>
@@ -74,7 +74,7 @@
                                         <h5>{{ $item['quantity'] }}</h5>
                                     </td>
                                     <td>
-                                        <p>${{ $item['price'] }}</p>
+                                        <p>{{ formatCurrency($item['price']) }}</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -83,7 +83,7 @@
                                     </td>
                                     <td></td>
                                     <td>
-                                        <p>${{ $item['quantity'] * $item['price'] }}</p>
+                                        <p>{{ formatCurrency($item['quantity'] * $item['price']) }}</p>
                                     </td>
                                 </tr>
                             @endforeach
@@ -93,7 +93,7 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <p>Flat rate: $50.00</p>
+                                    <p>Flat rate: {{ formatCurrency(20000) }}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -102,7 +102,7 @@
                                 </td>
                                 <td></td>
                                 <td>
-                                    <p>${{ $order->total }}</p>
+                                    <p>{{ formatCurrency($order->total) }}</p>
                                 </td>
                             </tr>
                         </tbody>

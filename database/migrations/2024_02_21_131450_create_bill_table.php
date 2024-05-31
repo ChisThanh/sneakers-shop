@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->date('delivery_date')->default(today());
-            $table->float('total')->default(0);
+            $table->bigInteger('total')->default(0);
             $table->integer('payment_status')->default(0);
             $table->integer('payment_method')->default(0);
             $table->integer('status')->default(0);

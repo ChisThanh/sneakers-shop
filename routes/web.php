@@ -58,6 +58,7 @@ Route::group(['prefix' => 'cart'], function () {
     Route::post('/update', [ShoppingCartController::class, 'updateCart'])->name('cart.update');
     Route::post('/updateItem/{id}', [ShoppingCartController::class, 'updateCartItem'])->name('cart.updateitem');
     Route::get('/clear', [ShoppingCartController::class, 'clearCart'])->name('cart.clear');
+    Route::get('/get-quantity', [ShoppingCartController::class, 'quantityCart'])->name('cart.quantityCart');
 });
 
 // auth check

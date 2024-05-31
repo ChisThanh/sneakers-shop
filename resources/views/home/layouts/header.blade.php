@@ -76,8 +76,8 @@
                      <ul class="nav navbar-nav navbar-right">
                          <li class="nav-item">
                              <a href="{{ route('cart-show') }}" class="cart">
-                                 <span class="ti-bag"><span
-                                         class="text-number">{{ getCart()->totalQuantity }}</span></span>
+                                 <span class="ti-bag"><span class="text-number"
+                                         id="total-quantity-header">{{ getCart()->totalQuantity }}</span></span>
                              </a>
                          </li>
                          <li class="nav-item">

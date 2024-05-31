@@ -2,8 +2,10 @@
 
 use App\Enums\PaymentStatusEnum;
 use App\Models\Bill;
+use App\Models\Config;
 use App\Models\ProductReview;
 use App\Models\ShoppingCart;
+use Illuminate\Support\Facades\App;
 
 if (!function_exists('getCart')) {
     function getCart()
@@ -54,9 +56,16 @@ if (!function_exists('checkPayment')) {
 if (!function_exists('formatCurrency')) {
     function formatCurrency($n)
     {
-        $inputStr = strval($n);
-        $parts = explode('.', $inputStr);
-        $parts[0] = number_format($parts[0]);
-        return implode('.', $parts);
+        if (App::isLocale('vi')) {
+            $inputStr = strval($n);
+            $parts = explode('.', $inputStr);
+            $parts[0] = number_format($parts[0]);
+            return implode('.', $parts) . " VND";
+        } else {
+            $conf = Config::where("key", "USD")->first('value');
+            $rate = (int) $conf->value;
+            $cur = $n / $rate;
+            return "$" . round($cur, 2);
+        }
     }
 }

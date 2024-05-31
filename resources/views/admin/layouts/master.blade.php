@@ -12,8 +12,6 @@
     <!-- App css -->
     <link href="{{ asset('assets_admin/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets_admin/css/app-modern.min.css') }}" rel="stylesheet" type="text/css" id="light-style" />
-    <link href="{{ asset('assets_admin/css/app-modern-dark.min.css') }}" rel="stylesheet" type="text/css"
-        id="dark-style" />
 
     @stack('css')
 
@@ -74,6 +72,7 @@
 <!-- bundle -->
 <script src="{{ asset('assets_admin/js/vendor.min.js') }}"></script>
 <script src="{{ asset('assets_admin/js/app.min.js') }}"></script>
+<script src="{{ asset('assets_admin/js/vendor/apexcharts.min.js') }}"></script>
 
 @stack('js')
 

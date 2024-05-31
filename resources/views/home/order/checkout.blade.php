@@ -55,13 +55,16 @@
                                 @foreach ($cart->items as $item)
                                     <li><a href="#">{{ $item['name'] }} <span class="middle">x
                                                 {{ $item['quantity'] }}</span> <span
-                                                class="last">{{ $item['quantity'] * $item['price'] }}</span></a></li>
+                                                class="last">{{ formatCurrency($item['quantity'] * $item['price']) }}</span></a>
+                                    </li>
                                 @endforeach
                             </ul>
                             <ul class="list list_2">
-                                <li><a href="#">Subtotal <span>{{ $cart->totalPrice }}</span></a></li>
-                                <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
-                                <li><a href="#">Total <span>{{ $cart->totalPrice + 50 }}</span></a></li>
+                                <li><a href="#">Subtotal <span>{{ formatCurrency($cart->totalPrice) }}</span></a></li>
+                                <li><a href="#">Shipping <span>Flat rate: {{ formatCurrency(20000) }}</span></a></li>
+                                <li><a href="#">Total <span>
+                                            {{ formatCurrency($cart->totalPrice + 20000) }}</span></a>
+                                </li>
                             </ul>
 
 
