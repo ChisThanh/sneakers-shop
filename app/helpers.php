@@ -1,11 +1,13 @@
 <?php
 
+use App\Enums\BillStatusEnum;
 use App\Enums\PaymentStatusEnum;
 use App\Models\Bill;
 use App\Models\Config;
 use App\Models\ProductReview;
 use App\Models\ShoppingCart;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 
 if (!function_exists('getCart')) {
     function getCart()
@@ -15,31 +17,25 @@ if (!function_exists('getCart')) {
 }
 
 if (!function_exists('checkCmt')) {
-    function checkCmt($idP, $idU): bool
+    function checkCmt($idP): bool
     {
-        $exists = Bill::query()
-            ->whereHas('details', function ($query) use ($idP) {
-                $query->where('product_id', $idP);
-            })
-            ->where('user_id', $idU)
-            ->first();
+        $results = DB::table('bill_details as b_d')
+            ->join('bills as b', 'b.id', '=', 'b_d.bill_id')
+            ->leftJoin('product_reviews as p', 'p.product_id', '=', 'b_d.product_id')
+            ->where('b.user_id', auth()->id())
+            ->whereNull('p.rating')
+            ->where('b.payment_status', PaymentStatusEnum::PAID)
+            ->where('b_d.product_id', $idP)
+            ->exists();
 
-        if (!$exists)
-            return false;
-
-        $exists = ProductReview::where('product_id', $idP)
-            ->where('user_id', $idU)
-            ->first();
-
-        if (!$exists)
+        if ($results)
             return true;
 
-        if ($exists->quantity_limit >= 0)
-            return false;
-
-        return true;
+        return false;
     }
 }
+
+
 
 if (!function_exists('checkPayment')) {
     function checkPayment($idBill): bool

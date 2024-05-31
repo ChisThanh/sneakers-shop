@@ -180,7 +180,7 @@
                         </div>
                         <div class="col-lg-6">
                             @if (auth()->check())
-                                @if (checkCmt($product->id, auth()->user()->id))
+                                @if (checkCmt($product->id))
                                     <div class="review_box">
                                         <h4>Add a Review</h4>
                                         <p>Your Rating:</p>

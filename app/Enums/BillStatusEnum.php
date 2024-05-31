@@ -14,5 +14,4 @@ final class BillStatusEnum extends Enum
     public const  PACK = 2;
     public const  TRANSPORT = 3;
     public const  RECEIVE = 4;
-    public const  REVIEWS = 5;
 }

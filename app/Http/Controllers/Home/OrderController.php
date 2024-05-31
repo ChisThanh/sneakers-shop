@@ -87,13 +87,6 @@ class OrderController extends Controller
         return view('home.order.check_status', compact('user', 'order'));
     }
 
-    public function Myorder()
-    {
-        $user = auth()->user();
-        $orders = $user->cart;
-        return view('Order.MyOrder', compact('orders'));
-    }
-
 
     public function vnpayment(Request $request)
     {
@@ -101,7 +94,7 @@ class OrderController extends Controller
         $order_id = $request['id_order'];
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "https://localhost/bill?order_id=$order_id";
+        $vnp_Returnurl = url('/') . "/bill?order_id=$order_id";
         $vnp_TmnCode = env("vnp_TmnCode");
         $vnp_HashSecret = env("vnp_HashSecret");
 
@@ -163,5 +156,17 @@ class OrderController extends Controller
         } else {
             echo json_encode($returnData);
         }
+    }
+    public function cancelOrder($id)
+    {
+        $user = auth()->user();
+        $order = Bill::where('id', $id)->where('user_id', $user->id)->first();
+        if ($order) {
+            $order->status = BillStatusEnum::DESTROY;
+            $order->save();
+            return redirect()->route('show-user')->with('success', 'Order cancelled successfully.');
+        }
+
+        return redirect()->route('show-user')->with('error', 'Order not found or you are not authorized to cancel this order.');
     }
 }

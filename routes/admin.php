@@ -12,7 +12,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['web', 'web'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index']);
     Route::get('/get-chart-data', [DashboardController::class, 'getChartData'])->name('getChartData');
     Route::get('/get-chart-categories', [DashboardController::class, 'getChartCategories'])->name('getChartCategories');

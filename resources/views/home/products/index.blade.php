@@ -60,8 +60,9 @@
                 <div class="filter-bar d-flex flex-wrap align-items-center">
                     <div class="pagination">
                         @if (!$product->onFirstPage())
-                            <a href="{{ $product->appends(request()->input())->previousPageUrl() }}" class="prev-arrow"><i
-                                    class="fa fa-long-arrow-left" aria-hidden="true"></i></a>
+                            <a href="{{ $product->appends(request()->input())->previousPageUrl() }}" class="prev-arrow">
+                                <i class="lnr lnr-arrow-left" aria-hidden="true"></i>
+                            </a>
                         @endif
 
                         @for ($i = 1; $i <= $product->lastPage(); $i++)
@@ -71,7 +72,7 @@
 
                         @if ($product->hasMorePages())
                             <a href="{{ $product->appends(request()->input())->nextPageUrl() }}" class="next-arrow"><i
-                                    class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                                    class="lnr lnr-arrow-right" aria-hidden="true"></i></a>
                         @endif
                     </div>
                 </div>

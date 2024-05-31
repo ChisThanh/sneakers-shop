@@ -45,10 +45,10 @@ class ProductController extends Controller
                 $query->orderBy('name', 'desc');
                 break;
             case 'asc':
-                $query->orderBy('price', 'asc');
+                $query->orderBy('price_sale', 'asc');
                 break;
             case 'desc':
-                $query->orderBy('price', 'desc');
+                $query->orderBy('price_sale', 'desc');
                 break;
             default:
                 break;

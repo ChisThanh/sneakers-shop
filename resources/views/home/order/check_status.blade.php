@@ -76,6 +76,12 @@
                                     <td>
                                         <p>{{ formatCurrency($item['price']) }}</p>
                                     </td>
+                                    @if (checkCmt($item['product_id']))
+                                        <td>
+                                            <a href="/product/detail/{{ $item['product_id'] }}" class="btn btn-success">Đánh
+                                                giá</a>
+                                        </td>
+                                    @endif
                                 </tr>
                                 <tr>
                                     <td>
@@ -85,6 +91,7 @@
                                     <td>
                                         <p>{{ formatCurrency($item['quantity'] * $item['price']) }}</p>
                                     </td>
+
                                 </tr>
                             @endforeach
                             <tr>
@@ -104,11 +111,12 @@
                                 <td>
                                     <p>{{ formatCurrency($order->total) }}</p>
                                 </td>
+
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <a href="{{ route('my-order') }}" class="btn btn-primary">My Order</a>
+                <a href="{{ route('show-user') }}" class="btn btn-primary">My Order</a>
             </div>
         </div>
     </section>

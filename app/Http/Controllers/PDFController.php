@@ -13,7 +13,9 @@ class PDFController extends Controller
 {
     public function viewPdfInvoice(string $id)
     {
+
         $data = Bill::with(['details', 'user'])
+            ->where("user_id", auth()->id())
             ->find($id);
 
         // dd($data);
@@ -30,6 +32,7 @@ class PDFController extends Controller
     public function downloadPdfInvoice(string $id)
     {
         $data = Bill::with('details')
+            ->where("user_id", auth()->id())
             ->find($id);
 
 

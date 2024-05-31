@@ -92,6 +92,7 @@ class ProductController extends Controller
         }
 
         $product->fill([
+            "price_sale" => $data['price_sale'],
             'price' =>  $data['price'],
             'stock_quantity' => $data['quantity'],
             'image' =>  $imagePath ?? $product->image,

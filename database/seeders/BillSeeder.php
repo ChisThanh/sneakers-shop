@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Bill;
 use App\Models\BillDetail;
+use App\Models\Config;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
+
 
 class BillSeeder extends Seeder
 {
@@ -30,5 +32,10 @@ class BillSeeder extends Seeder
                 ]);
             }
         }
+
+        Config::create([
+            "key" => "USD",
+            "value" => 25452,
+        ]);
     }
 }

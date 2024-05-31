@@ -55,7 +55,7 @@
                              <ul class="dropdown-menu">
                                  @auth
                                      <li class="nav-item">
-                                         <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
+                                         <a class="nav-link" href="{{ route('show-user') }}">{{ Auth::user()->name }}</a>
                                      </li>
                                      <li class="nav-item">
                                          <a class="nav-link" href="{{ route('logout') }}">{{ __('homepage.logout') }}</a>
