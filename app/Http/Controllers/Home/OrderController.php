@@ -106,7 +106,7 @@ class OrderController extends Controller
         $vnp_HashSecret = env("vnp_HashSecret");
 
         $vnp_TxnRef =   $order_id;
-        $vnp_OrderInfo = 'Thanh toan don hàng';
+        $vnp_OrderInfo = 'Thanh toán đơn hàng';
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = $request['total_order'] * 100;
         $vnp_Locale = 'vn';
