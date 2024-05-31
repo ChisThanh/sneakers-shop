@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\BillStatusEnum;
 use App\Enums\CartStatusEnum;
+use App\Enums\PaymentMethodEnum;
+use App\Enums\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
 use App\Models\Bill;
@@ -23,11 +25,12 @@ class BillController extends Controller
 
         $carts->transform(function ($cart) {
             $cart->user_name = $cart->user->name;
-
+            $cart->payment_method = PaymentMethodEnum::getKey($cart->payment_method);
+            $cart->payment_status = PaymentStatusEnum::getKey($cart->payment_status);
             if ($cart->status === 1) {
                 $cart->status_array = [BillStatusEnum::getKey(BillStatusEnum::DESTROY)];
             } else {
-                $cart->status_array = BillStatusEnum::getKeys(range((int)$cart->status, BillStatusEnum::REVIEWS));
+                $cart->status_array = BillStatusEnum::getKeys(range((int)$cart->status, BillStatusEnum::RECEIVE));
             }
             return $cart;
         });

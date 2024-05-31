@@ -109,7 +109,10 @@
                                     <td>{{ formatCurrency($bill->total) }}</td>
                                     <td>{{ $bill->delivery_date }}</td>
                                     <td>
-                                        <span class="badge badge-secondary">{{ $bill->payment_status }}</span>
+                                        <span
+                                            class="badge badge-secondary @if ($bill->payment_status === 'UNPAID') badge-danger @endif">
+                                            {{ $bill->payment_status }}
+                                        </span>
                                     </td>
                                     <td>
                                         <span class="badge badge-secondary">{{ $bill->status }}</span>

@@ -11,6 +11,7 @@ use App\Models\Bill;
 use App\Models\BillDetail;
 use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -74,6 +75,7 @@ class OrderController extends Controller
             ->where('user_id', auth()->user()->id)
             ->first();
 
+
         if (!$order)
             return back();
         // Quy định vnp_ResponseCode mã trả lời 00 ứng với kết quả Thành công cho tất cả các API
@@ -83,6 +85,20 @@ class OrderController extends Controller
                 "payment_status" => PaymentStatusEnum::PAID
             ]);
         }
+
+        $order->details->transform(function ($d) use ($order) {
+            $results = DB::table('bill_details as b_d')
+                ->join('bills as b', 'b.id', '=', 'b_d.bill_id')
+                ->leftJoin('product_reviews as p', 'p.product_id', '=', 'b_d.product_id')
+                ->where('b.user_id', auth()->user()->id)
+                ->where('b_d.product_id', $d->product_id)
+                ->where('b_d.bill_id', $order->id)
+                ->where('b.payment_status', PaymentStatusEnum::PAID)
+                ->whereNull('p.rating')
+                ->exists();
+            $d->rating = $results;
+            return $d;
+        });
 
         return view('home.order.check_status', compact('user', 'order'));
     }

@@ -26,6 +26,8 @@
                                 <th>User Name</th>
                                 <th>Total</th>
                                 <th>Delivery Date</th>
+                                <th>Payment Status</th>
+                                <th>Payment Method</th>
                                 <th>Status</th>
                                 <th>Detail</th>
                             </tr>
@@ -112,6 +114,8 @@
                         .append(`<td>${v.user_name}</td>`)
                         .append(`<td>${v.total}</td>`)
                         .append(`<td>${v.delivery_date}</td>`)
+                        .append(`<td>${v.payment_status}</td>`)
+                        .append(`<td>${v.payment_method}</td>`)
                         .append($(`<td data-id="${v.id}">`).append(select))
                         .append(
                             `<td class="table-action">

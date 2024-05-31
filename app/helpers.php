@@ -27,11 +27,7 @@ if (!function_exists('checkCmt')) {
             ->where('b.payment_status', PaymentStatusEnum::PAID)
             ->where('b_d.product_id', $idP)
             ->exists();
-
-        if ($results)
-            return true;
-
-        return false;
+        return $results;
     }
 }
 

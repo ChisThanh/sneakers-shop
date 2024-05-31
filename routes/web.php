@@ -67,13 +67,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [OrderController::class, 'checkout'])->name('checkout');
     Route::post('/checkout/update', [OrderController::class, 'update'])->name('checkout.update');
     Route::get('/bill', [OrderController::class, 'Bill'])->name('bill');
+    Route::get('/infor-user', [InforUserController::class, 'show'])->name('show-user');
+    Route::post('/updateUser/{id}', [InforUserController::class, 'updateUser'])->name('user.update');
+    Route::get('/password', [InforUserController::class, 'showPass'])->name('password.change');
+    Route::post('/order/cancel/{id}', [OrderController::class, 'cancelOrder'])->name('order.cancel');
 });
 
 
-Route::get('/infor-user', [InforUserController::class, 'show'])->name('show-user');
-Route::post('/updateUser/{id}', [InforUserController::class, 'updateUser'])->name('user.update');
-Route::get('/password', [InforUserController::class, 'showPass'])->name('password.change');
-Route::post('/order/cancel/{id}', [OrderController::class, 'cancelOrder'])->name('order.cancel');
+
 
 // Route Admin
 include __DIR__ . '/admin.php';

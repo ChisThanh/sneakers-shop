@@ -68,7 +68,9 @@
                             @foreach ($order->details as $item)
                                 <tr>
                                     <td>
-                                        <p>{{ $item['product_name'] }}</p>
+                                        <p><a
+                                                href="/product/detail/{{ $item['product_id'] }}">{{ $item['product_name'] }}</a>
+                                        </p>
                                     </td>
                                     <td>
                                         <h5>{{ $item['quantity'] }}</h5>
@@ -76,9 +78,10 @@
                                     <td>
                                         <p>{{ formatCurrency($item['price']) }}</p>
                                     </td>
-                                    @if (checkCmt($item['product_id']))
+                                    @if ($item['rating'])
                                         <td>
-                                            <a href="/product/detail/{{ $item['product_id'] }}" class="btn btn-success">Đánh
+                                            <a href="/product/detail/{{ $item['product_id'] }}"
+                                                class="btn btn-success">Đánh
                                                 giá</a>
                                         </td>
                                     @endif

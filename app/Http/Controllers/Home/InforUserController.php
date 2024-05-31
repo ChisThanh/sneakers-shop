@@ -33,14 +33,11 @@ class InforUserController extends Controller
                 ->where('b.user_id', auth()->id())
                 ->whereNull('p.rating')
                 ->where('b.payment_status', PaymentStatusEnum::PAID)
-                ->get();
+                ->exists();
 
 
-            if (count($results) > 0) {
-                $bill->check_rating  = true;
-            } else {
-                $bill->check_rating  = false;
-            }
+
+            $bill->check_rating  = $results;
 
             return $bill;
         });
