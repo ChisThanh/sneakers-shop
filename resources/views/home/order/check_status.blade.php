@@ -78,7 +78,7 @@
                                     <td>
                                         <p>{{ formatCurrency($item['price']) }}</p>
                                     </td>
-                                    @if ($item['rating'])
+                                    @if (checkCmt($item['product_id']))
                                         <td>
                                             <a href="/product/detail/{{ $item['product_id'] }}"
                                                 class="btn btn-success">Đánh

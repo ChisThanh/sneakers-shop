@@ -70,6 +70,9 @@
                                              href="{{ route('register') }}">{{ __('homepage.register') }}</a>
                                      </li>
                                  @endguest
+                                 <li class="nav-item">
+                                     <a class="nav-link" href="{{ route('password.change') }}">Đổi mật khẩu</a>
+                                 </li>
                              </ul>
                          </li>
                      </ul>

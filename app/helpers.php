@@ -19,15 +19,20 @@ if (!function_exists('getCart')) {
 if (!function_exists('checkCmt')) {
     function checkCmt($idP): bool
     {
-        $results = DB::table('bill_details as b_d')
-            ->join('bills as b', 'b.id', '=', 'b_d.bill_id')
-            ->leftJoin('product_reviews as p', 'p.product_id', '=', 'b_d.product_id')
-            ->where('b.user_id', auth()->id())
-            ->whereNull('p.rating')
-            ->where('b.payment_status', PaymentStatusEnum::PAID)
-            ->where('b_d.product_id', $idP)
+        $status_pm = PaymentStatusEnum::PAID;
+        $result = DB::table(DB::raw('(SELECT DISTINCT b.user_id, bd.product_id FROM bills b
+            JOIN bill_details bd ON b.id = bd.bill_id
+            WHERE payment_status = ' . $status_pm . ') AS bf'))
+            ->leftJoin('product_reviews as pr', function ($join) {
+                $join->on('pr.user_id', '=', 'bf.user_id')
+                    ->on('pr.product_id', '=', 'bf.product_id');
+            })
+            ->where('bf.user_id', auth()->id())
+            ->where('bf.product_id', $idP)
+            ->whereNull('pr.rating')
             ->exists();
-        return $results;
+
+        return $result;
     }
 }
 

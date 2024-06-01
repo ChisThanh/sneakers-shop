@@ -26,7 +26,9 @@ class User extends Authenticatable
         'phone',
         'address',
         'firtsname',
-        'lastname'
+        'lastname',
+        'login_attempts',
+        'last_login_attempt'
     ];
 
     public function checkAdmin(): bool

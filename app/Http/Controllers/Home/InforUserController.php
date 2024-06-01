@@ -26,23 +26,22 @@ class InforUserController extends Controller
             $bill->status =  BillStatusEnum::getKey($bill->status);
             $bill->payment_status = PaymentStatusEnum::getKey($bill->payment_status);
 
-            $results = DB::table('bill_details as b_d')
-                ->join('bills as b', 'b.id', '=', 'b_d.bill_id')
-                ->leftJoin('product_reviews as p', 'p.product_id', '=', 'b_d.product_id')
-                ->where('b_d.bill_id', $bill->id)
-                ->where('b.user_id', auth()->id())
-                ->whereNull('p.rating')
-                ->where('b.payment_status', PaymentStatusEnum::PAID)
+            $check_rating = DB::table(DB::raw('(SELECT DISTINCT b.user_id, b.id AS _bill_id, bd.product_id FROM bills b
+            JOIN bill_details bd ON b.id = bd.bill_id
+            WHERE payment_status = ' . PaymentStatusEnum::PAID . ') AS bf'))
+                ->leftJoin('product_reviews as pr', function ($join) {
+                    $join->on('pr.user_id', '=', 'bf.user_id')
+                        ->on('pr.product_id', '=', 'bf.product_id');
+                })
+                ->where('bf.user_id', auth()->id())
+                ->where('bf._bill_id', $bill->id)
+                ->whereNull('pr.rating')
                 ->exists();
 
-
-
-            $bill->check_rating  = $results;
+            $bill->check_rating  =  $check_rating;
 
             return $bill;
         });
-
-
 
         return view('home.user.show', compact("user", "bills"));
     }
@@ -65,27 +64,38 @@ class InforUserController extends Controller
         return redirect()->back()->with('success', 'User information updated successfully.');
     }
 
+
     public function showPass()
     {
-        return view('home.Change_pass');
+        return view('auth.change_pass');
     }
 
-    public function update(Request $request)
+    public function updatePass(Request $request)
     {
         $request->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|string|min:8|confirmed',
+            'password' => 'required',
+            'password_new' => 'required|string|min:8',
         ]);
 
-        $user = User::find(auth()->id());
-        if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()->back()->with('error', 'The current password is incorrect.');
+        $email = $request->get("email");
+        $pass = $request->get("password");
+
+        $user = User::where('email', $email)
+            ->first();
+
+        if (!$user) {
+            return back()->with("error", "Tài khoảng không tồn tại");
         }
 
-        $user->password = Hash::make($request->new_password);
+        if (!Hash::check($pass, $user->password)) {
+            return redirect()->back()->with('error', 'Mật khẩu cũ không khớp');
+        }
+
+
+        $user->password = Hash::make($request->password_new);
         $user->update();
 
 
-        return redirect()->back()->with('success', 'Password updated successfully.');
+        return redirect()->back()->with('error', 'Thay đổi thành công');
     }
 }

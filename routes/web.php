@@ -73,7 +73,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/cancel/{id}', [OrderController::class, 'cancelOrder'])->name('order.cancel');
 });
 
-
+Route::get('/password', [InforUserController::class, 'showPass'])->name('password.change');
+Route::post('/password', [InforUserController::class, 'updatePass'])->name('password.update');
 
 
 // Route Admin

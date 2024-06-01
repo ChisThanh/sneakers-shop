@@ -86,19 +86,6 @@ class OrderController extends Controller
             ]);
         }
 
-        $order->details->transform(function ($d) use ($order) {
-            $results = DB::table('bill_details as b_d')
-                ->join('bills as b', 'b.id', '=', 'b_d.bill_id')
-                ->leftJoin('product_reviews as p', 'p.product_id', '=', 'b_d.product_id')
-                ->where('b.user_id', auth()->user()->id)
-                ->where('b_d.product_id', $d->product_id)
-                ->where('b_d.bill_id', $order->id)
-                ->where('b.payment_status', PaymentStatusEnum::PAID)
-                ->whereNull('p.rating')
-                ->exists();
-            $d->rating = $results;
-            return $d;
-        });
 
         return view('home.order.check_status', compact('user', 'order'));
     }
