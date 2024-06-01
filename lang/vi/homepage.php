@@ -11,5 +11,5 @@ return [
     'username' => 'Tên tài khoản',
     'password' => 'Mật khẩu',
     'ForgotPassword' => 'Quên mật khẩu?',
-    
+    'CASH' => 'Tiền mặt',
 ];

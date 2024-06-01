@@ -75,6 +75,7 @@ class OrderController extends Controller
             ->where('user_id', auth()->user()->id)
             ->first();
 
+        $order->payment_method = __("homepage." . PaymentMethodEnum::getKey($order->payment_method));
 
         if (!$order)
             return back();

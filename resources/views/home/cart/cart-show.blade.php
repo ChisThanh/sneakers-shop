@@ -39,7 +39,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cart->items as $item)
+
+                                    @foreach ($cart->items as $index => $item)
                                         <tr>
                                             <td>
                                                 <div class="media">

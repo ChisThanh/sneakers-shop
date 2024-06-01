@@ -32,6 +32,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::group(['prefix' => 'bill', 'as' => 'bill.'], function () {
         Route::get('/', [BillController::class, 'index'])->name('index');
         Route::get('/edit/{id}', [BillController::class, 'update'])->name('edit');
+        Route::get('/edit/payment-status/{id}', [BillController::class, 'unpdatePaymentStatus'])->name('unpdatePaymentStatus');
     });
 
     //route brand

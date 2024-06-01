@@ -1,69 +1,51 @@
-import numpy as np
 import os
-import glob
-import cv2
-import sys
+import numpy as np
+from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
+from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.models import Model
+from sklearn.metrics.pairwise import cosine_similarity as sklearn_cosine_similarity
 
-from tensorflow.keras.applications import ResNet50
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.resnet50 import preprocess_input
-from scipy.spatial.distance import cosine
 
-weights_path = "resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5"
-model = ResNet50(weights=None, include_top=False, pooling='avg')
-model.load_weights(weights_path)
+def load_and_preprocess_image(img_path):
+    img = load_img(img_path, target_size=(224, 224))
+    img = img_to_array(img)
+    img = img.reshape((1, img.shape[0], img.shape[1], img.shape[2]))
+    img = preprocess_input(img)
+    return img
 
-def extract_color_histogram(image):
-    img_lab = cv2.cvtColor(image, cv2.COLOR_BGR2Lab)
-    hist = cv2.calcHist([img_lab], [0, 1, 2], None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
-    hist = cv2.normalize(hist, hist).flatten()
-    return hist
-def compare_color_histograms(hist1, hist2):
-    return cv2.compareHist(hist1, hist2, cv2.HISTCMP_CHISQR)
 
-def extract_features(image_path):
-    img = image.load_img(image_path, target_size=(224, 224))
-    img_array = image.img_to_array(img)
-    img_array = preprocess_input(img_array)
-    img_array = np.expand_dims(img_array, axis=0)
-    features = model.predict(img_array)
-    return features.flatten()
+model = ResNet50(weights=None, include_top=False, input_shape=(224, 224, 3))
+model.load_weights("resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5")
 
-def compare_features(feature1, feature2):
-    return cosine(feature1, feature2)
+feature_extractor = Model(inputs=model.input, outputs=model.output)
 
-def search_similar_images(query_feature, dataset_features, dataset_paths, n):
-    similarities = [compare_features(query_feature, feat) for feat in dataset_features]
-    most_similar_indices = sorted(range(len(similarities)), key=lambda k: similarities[k])[:n]
-    return [dataset_paths[idx] for idx in most_similar_indices]
 
-def get_dataset_paths(dataset_folder):
-    image_extensions = ["jpg", "jpeg", "png", "gif"]
-    return [img for ext in image_extensions for img in glob.glob(os.path.join(dataset_folder, f"*.{ext}"))]
+def compute_cosine_similarity(feature1, feature2):
+    similarity = sklearn_cosine_similarity(feature1.reshape(1, -1), feature2.reshape(1, -1))[0][0]
+    return similarity
 
-def get_dataset_features_and_histograms(dataset_paths):
-    dataset_features = []
-    dataset_histograms = []
-    for img_path in dataset_paths:
-        img = cv2.imread(img_path)
-        dataset_features.append(extract_features(img_path))
-        dataset_histograms.append(extract_color_histogram(img))
-    return dataset_features, dataset_histograms
+def _feature_image(directory):
+    arr_feature_image = []
+    image_paths = [os.path.join(directory, f) for f in os.listdir(directory) 
+                if os.path.isfile(os.path.join(directory, f)) and f.endswith('.jpg')]
+    for image_path in image_paths:
+        current_image = load_and_preprocess_image(image_path)
+        feature = feature_extractor.predict(current_image)
+        arr_feature_image.append(feature)
+    return arr_feature_image
 
-def search_images(image_path, n=3):
-    query_feature = extract_features(image_path)
-    query_histogram = extract_color_histogram(cv2.imread(image_path))
-    similarities_feature = [compare_features(query_feature, feat) for feat in dataset_features]
-    similarities_histogram = [compare_color_histograms(query_histogram, hist) for hist in dataset_histograms]
-    combined_scores = np.array(similarities_feature) + np.array(similarities_histogram)
-    most_similar_indices = combined_scores.argsort()[:n]
-    return [extract_file_name(dataset_paths[idx]) for idx in most_similar_indices]
+def search_img(arr_preprocess_image, input_image_path):
+  similar_images = [] 
+  input_image = load_and_preprocess_image(input_image_path)
+  input_image_feature = feature_extractor.predict(input_image)
+  for current_image in arr_preprocess_image:
+    similarity = compute_cosine_similarity(current_image, input_image_feature)
+    similar_images.append((input_image_path, similarity))
+  similar_images.sort(key=lambda x: x[1], reverse=True)
+  result_file_names = [os.path.basename(result[0]) for result in similar_images[:2]]
+  return result_file_names
 
-def extract_file_name(file_path):
-    file_name = file_path.split("/")[-1]
-    return file_name
 
-dataset_folder = "../public/images/products"
-dataset_paths = get_dataset_paths(dataset_folder)
-dataset_features, dataset_histograms = get_dataset_features_and_histograms(dataset_paths)
+
+
 

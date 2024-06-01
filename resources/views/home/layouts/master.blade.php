@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets_home/css/magnific-popup.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('assets_home/css/style.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('assets_home/css/jquery.toast.css') }}">
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
@@ -221,7 +221,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-
+<script src="{{ asset('assets_home/js/jquery.toast.js') }}"></script>
 
 @auth
     <script>
@@ -307,7 +307,7 @@
                     $.each(response, function(i, v) {
                         if (isFileNameValid(v.image)) {
                             v.image =
-                                `{{ asset('assets_home/img/product') }}/${v.image}`;
+                                `{{ asset('assets_home') }}/${v.image}`;
                         }
                         $("#data-search").append(`<hr><div class="cart-search-img"><div><a href="/product/detail/${v.id}"><h4>${v.name}</h4></a><div>Giá: <span>${v.price}VND</span></div></div><div><img src="${v.image}" alt="img" width="75"></div>
                     </div>`);
@@ -333,8 +333,14 @@
                 url: "/cart/add/" + idP,
                 dataType: "json",
                 success: function(response) {
-                    alert("Thêm vào giỏ hàng thành công");
                     updateQuantityCart();
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Thêm vào giỏ hàng thành công',
+                        showHideTransition: 'fade',
+                        icon: 'success',
+                        position: 'top-center',
+                    })
                 },
                 error: function(response) {
                     alert("Thêm vào giỏ hàng không thành công");

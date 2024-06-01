@@ -21,19 +21,16 @@ class BillController extends Controller
 
     public function getPaginate()
     {
-        $carts = Bill::query()->paginate(5);
+        $carts = Bill::with('user')->paginate(5);
 
-        $carts->transform(function ($cart) {
+        foreach ($carts as $cart) {
             $cart->user_name = $cart->user->name;
             $cart->payment_method = PaymentMethodEnum::getKey($cart->payment_method);
-            $cart->payment_status = PaymentStatusEnum::getKey($cart->payment_status);
-            if ($cart->status === 1) {
-                $cart->status_array = [BillStatusEnum::getKey(BillStatusEnum::DESTROY)];
-            } else {
-                $cart->status_array = BillStatusEnum::getKeys(range((int)$cart->status, BillStatusEnum::RECEIVE));
-            }
-            return $cart;
-        });
+            $cart->status_array = $cart->status === 1 ?
+                [BillStatusEnum::getKey(BillStatusEnum::DESTROY)] :
+                BillStatusEnum::getKeys(range((int)$cart->status, BillStatusEnum::RECEIVE));
+            $cart->status_payment_array = $cart->payment_status == 0 ? ["UNPAID", "PAID"] : ["PAID", "UNPAID"];
+        }
 
         return $carts;
     }
@@ -68,6 +65,16 @@ class BillController extends Controller
 
         $cart->save();
 
+        return $this->successResponse(message: 'Thành công');
+    }
+
+    public function unpdatePaymentStatus(Request $request, string $id)
+    {
+        $cart = Bill::query()->find($id);
+        $cart->update([
+            'payment_status' => PaymentStatusEnum::getValue($request->status),
+        ]);
+        $cart->save();
         return $this->successResponse(message: 'Thành công');
     }
 }

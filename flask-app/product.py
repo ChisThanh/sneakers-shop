@@ -1,16 +1,15 @@
-
 class Product:
-    def __init__(self, id, name, category_id, supplier_id, price, discount, image, stock, created_at, updated_at):
-        self.id = id
-        self.name = name
-        self.category_id = category_id
-        self.supplier_id = supplier_id
-        self.price = price
-        self.discount = discount
-        self.image = image
-        self.stock = stock
-        self.created_at = created_at
-        self.updated_at = updated_at
+    def __init__(self, *args):
+        self.id = args[0]
+        self.name = args[1]
+        self.category_id = args[2]
+        self.supplier_id = args[3]
+        self.price = args[4]
+        self.discount = args[5]
+        self.image = args[6]
+        self.stock = args[7]
+        self.created_at = args[8]
+        self.updated_at = args[9]
 
     def product_to_dict(self):
         return {

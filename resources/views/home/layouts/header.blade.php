@@ -43,6 +43,12 @@
                                  </li>
                              </ul>
                          </li>
+                         <li class="nav-item">
+                             <a class="nav-link" href="{{ route('cart-show') }}">
+                                 Giỏ hàng( <span class="text-number"id="total-quantity-header">
+                                     {{ getCart()->totalQuantity }}</span>)
+                             </a>
+                         </li>
                          <li class="nav-item submenu dropdown">
                              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                                  aria-haspopup="true" aria-expanded="false">
@@ -75,14 +81,10 @@
                                  </li>
                              </ul>
                          </li>
+
                      </ul>
+
                      <ul class="nav navbar-nav navbar-right">
-                         <li class="nav-item">
-                             <a href="{{ route('cart-show') }}" class="cart">
-                                 <span class="ti-bag"><span class="text-number"
-                                         id="total-quantity-header">{{ getCart()->totalQuantity }}</span></span>
-                             </a>
-                         </li>
                          <li class="nav-item">
                              <button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
                          </li>
@@ -107,6 +109,7 @@
                              </button>
                          </li>
                      </ul>
+
                  </div>
              </div>
          </nav>

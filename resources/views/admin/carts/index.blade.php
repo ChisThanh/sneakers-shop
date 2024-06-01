@@ -108,13 +108,19 @@
                     $.each(v.status_array, function(i, v) {
                         select.append(`<option value="${v}">${v}</option>`)
                     });
+                    console.log(v.status_payment_array);
+                    var selectPayment = $('<select class="custom-select select-status-payment">');
+                    $.each(v.status_payment_array, function(i, v) {
+                        selectPayment.append(`<option value="${v}">${v}</option>`)
+                    });
 
                     $('tbody').append('<tr>')
                         .append(`<td>${v.id}</td>`)
                         .append(`<td>${v.user_name}</td>`)
                         .append(`<td>${v.total}</td>`)
                         .append(`<td>${v.delivery_date}</td>`)
-                        .append(`<td>${v.payment_status}</td>`)
+                        .append($(`<td data-id="${v.id}">`).append(selectPayment))
+
                         .append(`<td>${v.payment_method}</td>`)
                         .append($(`<td data-id="${v.id}">`).append(select))
                         .append(
@@ -128,12 +134,10 @@
                                 <a href="/bill/down-invoice-pdf/${v.id}" class="action-icon">
                                     <i class="mdi mdi-cloud-download"></i>
                                 </a>
-
                             </td>`
                         );
                 });
             }
-
 
             function updatePagination(data) {
 
@@ -242,7 +246,6 @@
                                 timer: 1000,
                                 showConfirmButton: false
                             }).catch(swal.noop);
-                            // fetchData(currentPage);
                         },
                         error: function(response) {
                             swal({
@@ -255,6 +258,38 @@
                         }
                     });
                 }).catch(swal.noop)
+            });
+
+            $('tbody').on('change', '.select-status-payment', function(e) {
+                var closestTr = $(this).closest('td');
+                var dataId = closestTr.attr('data-id');
+                var selectedValue = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: `/admin/bill/edit/payment-status/${dataId}`,
+                    data: {
+                        'status': selectedValue
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        swal({
+                            title: "Thay đổi thành công!",
+                            buttonsStyling: false,
+                            type: "success",
+                            timer: 1000,
+                            showConfirmButton: false
+                        }).catch(swal.noop);
+                    },
+                    error: function(response) {
+                        swal({
+                            title: "Thay đổi không thành công!",
+                            buttonsStyling: false,
+                            type: "error",
+                            timer: 1000,
+                            showConfirmButton: false
+                        }).catch(swal.noop);
+                    }
+                });
             });
 
         });

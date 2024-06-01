@@ -235,7 +235,13 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        alert("Thêm vào giỏ hàng thành công");
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Thêm vào giỏ hàng thành công',
+                            showHideTransition: 'fade',
+                            icon: 'success',
+                            position: 'top-center',
+                        })
                         updateQuantityCart();
                     },
                     error: function(response) {

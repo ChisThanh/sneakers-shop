@@ -24,6 +24,7 @@
                             <li><a href="#"><span>Order number</span> {{ $user->phone }}</a></li>
                             <li><a href="#"><span>Address</span> {{ $user->address }}</a></li>
                             <li><a href="#"><span>Total</span> {{ formatCurrency($order->total) }}</a></li>
+                            <li><a href="#"><span>Payment method</span> {{ $order->payment_method }}</a></li>
                             <li>
                                 <a href="#">
                                     <span>Payment status</span>

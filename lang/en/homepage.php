@@ -10,5 +10,6 @@ return [
     'logout' => 'Logout',
     'username' => 'Username',
     'password' => 'Password',
-    'ForgotPassword' => 'Forgot Password?'
+    'ForgotPassword' => 'Forgot Password?',
+    'CASH' => 'Cash',
 ];

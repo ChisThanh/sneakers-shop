@@ -67,11 +67,7 @@
     </section>
     <!--================End Login Box Area =================-->
 @endsection
-@push('css')
-    <link rel="stylesheet" href="{{ asset('assets_home/css/jquery.toast.css') }}">
-@endpush
 @push('js')
-    <script src="{{ asset('assets_home/js/jquery.toast.js') }}"></script>
     @if ($errors->any())
         <script>
             $.toast({
