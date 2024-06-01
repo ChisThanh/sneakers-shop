@@ -12,4 +12,5 @@ class Config extends Model
         "key",
         "value"
     ];
+    public $timestamps = false;
 }
