@@ -32,9 +32,9 @@
 
         <div style="margin-left: 25px;">
             <p>
-                <b>Receiver</b>: {{ $data->user->name }}
+                <b>Receiver</b>: {{ $user->name }}
                 <br>
-                <b>Email</b>: {{ $data->user->email }}
+                <b>Email</b>: {{ $user->email }}
             </p>
         </div>
         <table class="table-main">
