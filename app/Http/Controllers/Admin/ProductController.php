@@ -47,7 +47,7 @@ class ProductController extends Controller
         }
 
         Product::create([
-            "price_sale" => $data['price_sale'],
+            'price_sale' => $data['price_sale'],
             'price' =>  $data['price'],
             'category_id' => $data['category'],
             'brand_id' => $data['brand'],
@@ -92,7 +92,7 @@ class ProductController extends Controller
         }
 
         $product->fill([
-            "price_sale" => $data['price_sale'],
+            'price_sale' => $data['price_sale'],
             'price' =>  $data['price'],
             'stock_quantity' => $data['quantity'],
             'image' =>  $imagePath ?? $product->image,

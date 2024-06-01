@@ -31,6 +31,11 @@ class UpdateRequest extends FormRequest
                 'numeric',
                 'min:0'
             ],
+            'price_sale' => [
+                'required',
+                'numeric',
+                'min:0'
+            ],
             'image' => [
                 'nullable',
                 'image',

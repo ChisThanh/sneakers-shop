@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('category_id')->constrained();
             $table->foreignId('brand_id')->constrained();
-            $table->float('price')->default(0);
-            $table->float('price_sale')->default(0);
+            $table->bigInteger('price')->default(0);
+            $table->bigInteger('price_sale')->default(0);
             $table->string('image');
             $table->integer('stock_quantity');
             $table->timestamps();
