@@ -41,4 +41,9 @@ class Product extends Model implements TranslatableContract
     {
         return $this->hasone(Category::class, 'id', 'category_id');
     }
+
+    public function brand()
+    {
+        return $this->hasone(Brand::class, 'id', 'brand_id');
+    }
 }

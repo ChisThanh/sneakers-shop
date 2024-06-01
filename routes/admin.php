@@ -17,7 +17,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/get-chart-data', [DashboardController::class, 'getChartData'])->name('getChartData');
     Route::get('/get-chart-categories', [DashboardController::class, 'getChartCategories'])->name('getChartCategories');
     Route::get('/chat', [ChatController::class, 'index'])->name('chat');
-
+    Route::get('/export-excel', [ProductController::class, 'export'])->name("export");
     // route product
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
         Route::get('/', [ProductController::class, 'index'])->name('index');

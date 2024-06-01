@@ -30,7 +30,7 @@
                                         CSV</label>
                                     <input type="file" id="file-import" class="d-none" accept=".csv" name="file">
                                 </form>
-                                <button type="button" class="btn btn-light mb-2">Export</button>
+                                <a class="btn btn-light mb-2" href="{{ route('admin.export') }}">Export</a>
                             </div>
                         </div><!-- end col-->
                     </div>

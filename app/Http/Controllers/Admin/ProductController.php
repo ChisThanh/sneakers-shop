@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductExport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
 use App\Http\Requests\Product\StoreRequest;
@@ -132,5 +133,10 @@ class ProductController extends Controller
             }
             return $this->errorResponse("Không thành công");
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new ProductExport, 'products.xlsx');
     }
 }

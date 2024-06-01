@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ChatController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\InforUserController;
 use App\Http\Controllers\Home\OrderController;
@@ -75,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/password', [InforUserController::class, 'showPass'])->name('password.change');
 Route::post('/password', [InforUserController::class, 'updatePass'])->name('password.update');
+
 
 
 // Route Admin

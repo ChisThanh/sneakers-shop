@@ -2,6 +2,8 @@
 
 namespace App\Imports;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductTranslation;
 use Maatwebsite\Excel\Concerns\ToArray;
@@ -14,9 +16,25 @@ class ProductImport implements ToArray, WithHeadingRow
     {
         foreach ($array as $each) {
             try {
+
                 $name = $each['ten'];
                 $price = $each['gia'];
+                $price_sale = $each['gia_khuyen_mai'];
+                $quantiy = $each['so_luong'];
                 $description = $each['mo_ta'];
+                $brand_name = $each['nhan_hieu'];
+                $category_name = $each['the_loai'];
+
+                $brand = Brand::firstOrCreate(
+                    ["name" => $brand_name],
+                    ["name" => $brand_name]
+                );
+                $ategory = Category::firstOrCreate(
+                    ["name" => $category_name],
+                    ["name" => $category_name]
+                );
+
+
 
                 $product = Product::query()->where('name', $name)->first();
 
@@ -25,10 +43,13 @@ class ProductImport implements ToArray, WithHeadingRow
                 }
 
                 Product::create([
+                    'brand_id' => $brand->id,
+                    'category_id' => $ategory->id,
                     'name' => $name,
                     'price' => $price,
-                    'stock_quantity' => 1,
-                    'image' => 'Chưa có ảnh',
+                    'price_sale' => $price_sale,
+                    'stock_quantity' =>  $quantiy,
+                    'image' => '',
                     'vi' => [
                         'description' => $description,
                     ],
