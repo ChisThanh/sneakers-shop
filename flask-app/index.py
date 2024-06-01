@@ -24,7 +24,7 @@ api_app = Blueprint('api', __name__, url_prefix='/api/')
 def get_data(images):
     cursor = connection.cursor()
     where_condition = " OR ".join([f"image LIKE '%{img}%'" for img in images])
-    cursor.execute(f"SELECT * FROM products WHERE {where_condition} LIMIT 3")
+    cursor.execute(f"SELECT * FROM products WHERE {where_condition} LIMIT 4")
     data = cursor.fetchall()
     cursor.close()
 
