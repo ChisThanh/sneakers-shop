@@ -85,13 +85,15 @@
                             <div class="col-lg-4 col-md-6">
                                 <div class="single-product">
                                     <a href="{{ route('product.detailpro', $item->id) }}">
-                                        <img class="img-fluid" src="{{ $item->image }}" alt="">
+                                        <img style="height: 271px;" class="img-fluid" src="{{ $item->image }}"
+                                            alt="">
                                     </a>
                                     <div class="product-details">
                                         <h6>{{ $item->name }}</h6>
                                         <div class="price">
                                             <h6>{{ formatCurrency($item->price_sale) }} </h6>
-                                            <h6 class="l-through">{{ formatCurrency($item->price) }} </h6>
+                                            <h6 class="l-through">{{ formatCurrency($item->price) }}
+                                            </h6>
                                         </div>
                                         <div class="prd-bottom">
                                             <a href="#" class="social-info add-to-cart-all"

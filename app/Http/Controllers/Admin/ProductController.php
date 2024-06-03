@@ -40,11 +40,10 @@ class ProductController extends Controller
             return redirect()->back()->withErrors(['msg' => 'Sản phẩm đã tồn tại']);
         }
 
-        $imagePath = 'products/';
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $newFileName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/products'), $newFileName);
+            $image->move(public_path('images'), $newFileName);
         }
 
         Product::create([
@@ -53,7 +52,7 @@ class ProductController extends Controller
             'category_id' => $data['category'],
             'brand_id' => $data['brand'],
             'stock_quantity' => $data['quantity'],
-            'image' =>  $imagePath . $newFileName,
+            'image' =>  $newFileName,
             'name' => $data['name'],
 
             'vi' => [
@@ -85,18 +84,18 @@ class ProductController extends Controller
             return redirect()->back()->withErrors(['msg' => 'Sản phẩm không tồn tại']);
         }
 
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $newFileName = time() . '.' . $image->getClientOriginalExtension();
-
-            $image->move(public_path('images/products'), $newFileName);
+            $image->move(public_path('images'), $newFileName);
         }
 
         $product->fill([
             'price_sale' => $data['price_sale'],
             'price' =>  $data['price'],
             'stock_quantity' => $data['quantity'],
-            'image' =>  $imagePath ?? $product->image,
+            'image' => $newFileName,
             'name' => $data['name'],
             'vi' => [
                 'description' => $data['description-vi'],
