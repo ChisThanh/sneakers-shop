@@ -30,7 +30,7 @@
                                     <span>Payment status</span>
                                     @if ($order->payment_status == 0)
                                         <span>
-                                            <p style="color: red">Chưa thanh toán</p>
+                                            <p style="color: red">Chưa thanh toán </p>
                                         </span>
                                     @else
                                         <span>
@@ -39,15 +39,24 @@
                                     @endif
                                 </a>
                             </li>
-                            @if (!checkPayment($order->id))
+
+                            @if ($order->status !== 'DESTROY')
+                                @if (!checkPayment($order->id))
+                                    <li>
+                                        <form action="{{ route('vnpayment') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="redirect">
+                                            <input type="hidden" name="id_order" value="{{ $order->id }}">
+                                            <input type="hidden" name="total_order" value="{{ $order->total }}">
+                                            <button class="btn btn-primary">Thanh toán bằng VNPAY</button>
+                                        </form>
+                                    </li>
+                                @endif
+                            @else
                                 <li>
-                                    <form action="{{ route('vnpayment') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="redirect">
-                                        <input type="hidden" name="id_order" value="{{ $order->id }}">
-                                        <input type="hidden" name="total_order" value="{{ $order->total }}">
-                                        <button class="btn btn-primary">Thanh toán bằng VNPAY</button>
-                                    </form>
+                                    <span>
+                                        <p style="color: red" class="h2">{{ $order->status }} </p>
+                                    </span>
                                 </li>
                             @endif
                         </ul>

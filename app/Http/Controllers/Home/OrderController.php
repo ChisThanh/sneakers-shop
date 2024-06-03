@@ -74,7 +74,7 @@ class OrderController extends Controller
             ->where('id', $request["order_id"])
             ->where('user_id', auth()->user()->id)
             ->first();
-
+        $order->status = BillStatusEnum::getKey($order->status);
         $order->payment_method = __("homepage." . PaymentMethodEnum::getKey($order->payment_method));
 
         if (!$order)
