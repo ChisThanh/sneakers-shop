@@ -19,6 +19,10 @@
             <div class="card">
                 <div class="card-body">
                     {{-- table --}}
+                    <p>
+                        <a class="btn btn-primary mb-2" href="{{ route('admin.update-currency-usd') }}">Cập nhật giá USD</a>
+                        <span class="mx-2 h4"> 1 USD == {{ $price }} VND </span>
+                    </p>
                     <table class="table table-hover table-centered mb-0">
                         <thead>
                             <tr>
@@ -292,6 +296,15 @@
                 });
             });
 
+            @if (session('notif'))
+                swal({
+                    title: "Thay đổi thành công!",
+                    buttonsStyling: false,
+                    type: "success",
+                    timer: 1000,
+                    showConfirmButton: false
+                }).catch(swal.noop);
+            @endif
         });
     </script>
 @endpush

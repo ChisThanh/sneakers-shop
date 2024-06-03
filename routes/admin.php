@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Models\Category;
@@ -65,4 +66,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/', [SettingController::class, 'index'])->name('index');
         Route::post('/change', [SettingController::class, 'change'])->name('change');
     });
+
+    // update currency
+    Route::get("/update-currency-usd", [CurrencyController::class, 'getSellUSD'])->name("update-currency-usd");
 });

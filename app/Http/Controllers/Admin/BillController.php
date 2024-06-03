@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\BillStatusEnum;
-use App\Enums\CartStatusEnum;
 use App\Enums\PaymentMethodEnum;
 use App\Enums\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponseTrait;
 use App\Models\Bill;
 use App\Models\BillDetail;
-use App\Models\Cart;
-use App\Models\CartDetail;
+use App\Models\Config;
 use Illuminate\Http\Request;
 
 
@@ -47,7 +45,9 @@ class BillController extends Controller
 
     public function index()
     {
-        return view('admin.carts.index');
+        $config = Config::where("key", "USD")->first("value");
+        $price = $config->value;
+        return view('admin.carts.index', compact('price'));
     }
 
 

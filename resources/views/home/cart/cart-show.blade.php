@@ -125,11 +125,15 @@
 
             $(".input-text.qty").change(function(e) {
                 var $parent = $(this).closest('tr');
-                var price = $parent.find('.price').text();
-                price = parseInt(price.replace(/,/g, ''));
+                var priceString = $parent.find('.price').text();
+                let price = 0;
+                if (priceString.startsWith("$")) {
+                    price = parseFloat(priceString.replace("$", ""));
+                } else {
+                    price = parseInt(priceString.replace(/,/g, ''));
+                }
                 var productId = $(this).data('id');
                 var qty = $(this).val();
-
                 update(productId, qty, price, $parent.find('.total'));
 
             });
@@ -144,7 +148,10 @@
                     },
                     dataType: "json",
                     success: function(response) {
-                        el_total.text(`${formatCurrency(parseInt(qty * price))} VND`);
+                        if (isFloat(price))
+                            el_total.text(`$${formatCurrency((qty * price).toFixed(2))}`);
+                        else
+                            el_total.text(`${formatCurrency(qty * price)} VND`);
                         updateQuantityCart();
                     },
                     error: function(xhr, status, error) {
@@ -160,6 +167,11 @@
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                 return parts.join('.');
             }
+
+            function isFloat(number) {
+                return Number(number) === number && number % 1 !== 0;
+            }
+
 
         });
     </script>
