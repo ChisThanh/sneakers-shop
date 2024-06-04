@@ -82,6 +82,7 @@ class OrderController extends Controller
         // Quy định vnp_ResponseCode mã trả lời 00 ứng với kết quả Thành công cho tất cả các API
         if ($request["vnp_ResponseCode"] == '00') {
             $order->update([
+                "status" => BillStatusEnum::getValue($order->status),
                 "payment_method" => PaymentMethodEnum::VNPAY,
                 "payment_status" => PaymentStatusEnum::PAID
             ]);
